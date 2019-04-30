@@ -1,0 +1,25 @@
+logging:
+    path: ./log/
+spring:
+  profiles:
+    active:
+    - 'prod'
+  autoconfigure:
+    exclude:
+    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+---
+
+spring:
+  profiles: test
+media-batch:
+    paths:
+        destination: 'src//test//resources//spring-media-batch'
+
+---
+
+spring:
+  profiles: prod
+media-batch:
+    paths:
+        destination: 'toto'    
