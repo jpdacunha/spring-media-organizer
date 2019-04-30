@@ -88,8 +88,8 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>jpdacunha/spring-media-batch-${project.artifactId}</repository>
-					<tag>${project.version}</tag>
+					<repository>jpdacunha/${project.artifactId}</repository>
+					<tag>latest</tag>
 					<buildArgs>
 						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
 					</buildArgs>
