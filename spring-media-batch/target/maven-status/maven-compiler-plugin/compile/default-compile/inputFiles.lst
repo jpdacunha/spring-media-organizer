@@ -1,8 +1,0 @@
-/home/dev/git/spring-media-organizer/spring-media-batch/src/main/java/com/jpdacunha/media/batch/organizer/service/MetaDatasReaderService.java
-/home/dev/git/spring-media-organizer/spring-media-batch/src/main/java/com/jpdacunha/media/batch/organizer/exception/MediaBatchException.java
-/home/dev/git/spring-media-organizer/spring-media-batch/src/main/java/com/jpdacunha/media/batch/organizer/filter/impl/ImageFileFilter.java
-/home/dev/git/spring-media-organizer/spring-media-batch/src/main/java/com/jpdacunha/media/batch/organizer/service/impl/MediaServiceImpl.java
-/home/dev/git/spring-media-organizer/spring-media-batch/src/main/java/com/jpdacunha/media/batch/organizer/SpringMediaBatchApplication.java
-/home/dev/git/spring-media-organizer/spring-media-batch/src/main/java/com/jpdacunha/media/batch/organizer/service/impl/MetaDatasReaderServiceImpl.java
-/home/dev/git/spring-media-organizer/spring-media-batch/src/main/java/com/jpdacunha/media/batch/organizer/utils/FileSystemUtils.java
-/home/dev/git/spring-media-organizer/spring-media-batch/src/main/java/com/jpdacunha/media/batch/organizer/service/MediaService.java
