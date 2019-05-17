@@ -205,6 +205,10 @@ public class FileSystemUtils {
 	public static boolean isFileExists(File file) {
 		return file != null && file.exists();
 	}
+	
+	public static boolean isDirExists(File file) {
+		return file != null && file.exists() && file.isDirectory();
+	}
 
 	public static boolean isDirEquals(File dir1, File dir2) {
 		

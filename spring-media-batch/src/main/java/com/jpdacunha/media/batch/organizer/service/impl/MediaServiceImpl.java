@@ -2,24 +2,28 @@ package com.jpdacunha.media.batch.organizer.service.impl;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;
+import com.jpdacunha.media.batch.organizer.model.DateDescriptor;
+import com.jpdacunha.media.batch.organizer.model.MediaDescriptor;
 import com.jpdacunha.media.batch.organizer.service.MediaService;
-import com.jpdacunha.media.batch.organizer.service.MetaDatasReaderService;
 
 @Service
 public class MediaServiceImpl implements MediaService {
 	
 	private static Logger log = LoggerFactory.getLogger(MediaServiceImpl.class);
 	
-	@Autowired
-	private MetaDatasReaderService metaDatasReaderService;
+	/*@Autowired
+	private MetaDatasReaderService metaDatasReaderService;*/
 	
 	
 	public void classifyByYear(File startDir, File destDir, FileFilter fileFilter) throws MediaBatchException {
@@ -46,13 +50,12 @@ public class MediaServiceImpl implements MediaService {
 			for (File file : searched) {
 				
 				
+				MediaDescriptor mediaDescriptor = new MediaDescriptor(file, Locale.FRANCE);
+				
 				//Les dates de modification ne sont pas conservées en cas de copie de fichier
 				//Les données EXIF ne sont pas renseignées dans les photos que nous avons. Il faut se baser sur la date de modif qui peut être lue sans librairy particulière.
 				log.debug("Starting classification for [" + file.getName() + "] ...");
-				
-				String modifiedDate = metaDatasReaderService.readModifiedDateAsString(file);
-				log.debug("  :> " + modifiedDate);
-				log.debug("  :> " + new Date(file.lastModified()));
+				log.debug("  :> " + mediaDescriptor);
 				log.debug("Done.");
 				
 			}
