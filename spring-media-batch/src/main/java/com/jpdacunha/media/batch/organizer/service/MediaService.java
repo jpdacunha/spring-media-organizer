@@ -7,6 +7,8 @@ import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;
 
 public interface MediaService {
 	
-	public void classifyByYear(File startDir, File destDir, FileFilter fileFilter) throws MediaBatchException;
+	public void classifyPhotos() throws MediaBatchException;
+	
+	public void classifyByYear(File startDir, File destDir, FileFilter fileFilter, boolean dryRun) throws MediaBatchException;
 
 }

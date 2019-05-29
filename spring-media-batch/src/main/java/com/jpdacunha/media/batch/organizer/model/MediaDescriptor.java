@@ -3,6 +3,8 @@ package com.jpdacunha.media.batch.organizer.model;
 import java.io.File;
 import java.util.Locale;
 
+import org.apache.commons.lang3.StringUtils;
+
 import lombok.ToString;
 
 @ToString(callSuper=false, includeFieldNames=true)
@@ -25,7 +27,7 @@ public class MediaDescriptor {
 		this.name = file.getName();
 		this.originalPath = file.getAbsolutePath();
 		this.dateDescriptor = new DateDescriptor(file.lastModified(), locale);
-		this.yearMonthDirName = dateDescriptor.getYear() + File.separator + dateDescriptor.getMonthName();
+		this.yearMonthDirName = dateDescriptor.getYear() + File.separator + StringUtils.capitalize(dateDescriptor.getMonthName());
 		
 	}
 

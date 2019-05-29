@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.io.FileExistsException;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -160,6 +162,36 @@ public class FileSystemUtils {
 			throw new MediaBatchException("Error while comparing files");
 		}
 
+	}
+	
+	public static void copyDirectory(File srcDir, File destDir) {
+		
+		try {
+			FileUtils.copyDirectory(srcDir, destDir);
+		} catch (IOException e) {
+			throw new MediaBatchException(e);
+		}
+		
+	}
+	
+	public static void moveFileToDirectory(File srcFile, File dir, boolean deleteIfExists) {
+		
+		try {
+			FileUtils.moveFileToDirectory(srcFile, dir, true);
+		} catch (FileExistsException e) {
+			
+			if (deleteIfExists && srcFile.isFile()) {
+				log.warn(e.getMessage());
+				srcFile.delete();
+				log.warn("Duplicate [" + srcFile.getAbsoluteFile() + "] successfully deleted");
+			} else {
+				throw new MediaBatchException(e);
+			}
+			
+		} catch (IOException e) {
+			throw new MediaBatchException(e);
+		}
+		
 	}
 	
 	public static File recreateDir(String path) throws MediaBatchException {
@@ -325,22 +357,25 @@ public class FileSystemUtils {
 	}
 	
 	public static void displayDirectoryContent(File dir) {
+		displayDirectoryContent(dir, "");
+	}
+	
+	public static void displayDirectoryContent(File dir, String pad) {
 		
-		log.debug("Displaying [" + dir.getName() + "] content ...");
 		try {
 			
 			File[] files = dir.listFiles();
 			for (File file : files) {
 				if (file.isDirectory()) {
-					log.debug(" + directory : [" + file.getCanonicalPath() + "]");
-					displayDirectoryContent(file);
+					log.debug(pad + " + [" + file.getName() + "] -> [directory] -> [" + file.getCanonicalPath() + "]");
+					displayDirectoryContent(file, pad + "  ");
 				} else {
-					log.debug("     - file : [" + file.getCanonicalPath() + "]");
+					log.debug(pad + "  - [" + file.getName() + "] -> [file] -> [" + file.getCanonicalPath() + "]");
 				}
 			}
 			
 			if (files.length == 0) {
-				log.debug(" Empty directory.");
+				log.debug(pad + "  - <Empty>");
 			}
 			
 		} catch (IOException e) {

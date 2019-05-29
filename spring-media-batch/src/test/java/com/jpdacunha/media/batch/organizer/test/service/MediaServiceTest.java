@@ -1,55 +1,67 @@
 package com.jpdacunha.media.batch.organizer.test.service;
 
-import java.io.File;
-
-import org.apache.commons.io.filefilter.IOFileFilter;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;
-import com.jpdacunha.media.batch.organizer.filter.impl.ImageFileFilter;
+import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.service.MediaService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles(profiles = "test")
-public class MediaServiceTest {
+public class MediaServiceTest extends RootTest {
 	
 	private static Logger log = LoggerFactory.getLogger(MediaServiceTest.class);
 	
 	@Autowired
 	private MediaService mediaService;
 	
-	@Value("${media-batch.paths.destination}")
-	private String destDirPath;
+	@Autowired
+	private MediaBatchYamlConfiguration configuration;
 
 	@Test
-	public void classifyByYearNominal1() throws MediaBatchException {
+	public void classifyByYearNominal1() {
 		
-		IOFileFilter fileFilter = new ImageFileFilter();
+		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
 		
-		File destDir = new File(destDirPath);
-		File startDir = new File("src/test/resources/spring-media-batch/classifyByYearNominal1/source");
+		boolean result = super.classifyByYearDirEquality(configuration, mediaService, testName);
 		
-		mediaService.classifyByYear(startDir, destDir, fileFilter);
-		
+		Assert.assertTrue(result);
+			
 	}
 
-	/*@Override
-	public String getDirTestName() {
-		return "MediaServiceTest";
+	@Test
+	public void classifyByYearNominalIgnoringNonImageFiles() {
+		
+		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
+		
+		boolean result = super.classifyByYearDirEquality(configuration, mediaService, testName);
+		
+		Assert.assertTrue(result);
+		
+	}
+	
+	public MediaService getMediaService() {
+		return mediaService;
 	}
 
-	@Override
-	public String getDescription() {
-		return "Test if the test infrastructure is ok";
-	}*/
+	public void setMediaService(MediaService mediaService) {
+		this.mediaService = mediaService;
+	}
+
+	public MediaBatchYamlConfiguration getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(MediaBatchYamlConfiguration configuration) {
+		this.configuration = configuration;
+	}
 
 }

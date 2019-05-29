@@ -2,33 +2,55 @@ package com.jpdacunha.media.batch.organizer.service.impl;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.time.Month;
-import java.time.format.TextStyle;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
+import org.apache.commons.io.filefilter.IOFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;
-import com.jpdacunha.media.batch.organizer.model.DateDescriptor;
+import com.jpdacunha.media.batch.organizer.filter.impl.ImageFileFilter;
 import com.jpdacunha.media.batch.organizer.model.MediaDescriptor;
 import com.jpdacunha.media.batch.organizer.service.MediaService;
+import com.jpdacunha.media.batch.organizer.utils.FileSystemUtils;
 
 @Service
 public class MediaServiceImpl implements MediaService {
 	
 	private static Logger log = LoggerFactory.getLogger(MediaServiceImpl.class);
-	
-	/*@Autowired
-	private MetaDatasReaderService metaDatasReaderService;*/
-	
-	
-	public void classifyByYear(File startDir, File destDir, FileFilter fileFilter) throws MediaBatchException {
+
+	@Autowired
+	private MediaBatchYamlConfiguration configuration;
+
+	@Scheduled(cron = "0 * * * * *")
+	public void classifyPhotos() throws MediaBatchException {
 		
-		log.debug("Starting classifyByYear ...");
+		log.info("########## Starting classifyPhotos ...");
+		String[] startPaths = configuration.getPaths().getStartRootDirs();
+		String destPath = configuration.getPaths().getDestinationRootDir();
+		IOFileFilter fileFilter = new ImageFileFilter();
+		
+		File destDir = new File(destPath);
+		for (String startPath : startPaths) {
+			
+			File startDir = new File(startPath);
+			log.info("###### Processing [" + startDir.getAbsolutePath() + "] directory...");
+			classifyByYear(startDir, destDir, fileFilter, false);
+			log.info("###### Done.");
+		}
+		
+		log.info("########## End.");
+		
+	}
+	
+	public void classifyByYear(File startDir, File destDir, FileFilter fileFilter, boolean dryRun) throws MediaBatchException {
+		
+		log.info("##### Starting classifyByYear ...");
+		log.info("## Applied configuration : [" + configuration + "]");
 		
 		if (startDir == null || destDir == null) {
 			throw new MediaBatchException("Missing required parameter");
@@ -49,14 +71,23 @@ public class MediaServiceImpl implements MediaService {
 			
 			for (File file : searched) {
 				
-				
 				MediaDescriptor mediaDescriptor = new MediaDescriptor(file, Locale.FRANCE);
 				
 				//Les dates de modification ne sont pas conservées en cas de copie de fichier
-				//Les données EXIF ne sont pas renseignées dans les photos que nous avons. Il faut se baser sur la date de modif qui peut être lue sans librairy particulière.
-				log.debug("Starting classification for [" + file.getName() + "] ...");
-				log.debug("  :> " + mediaDescriptor);
-				log.debug("Done.");
+				//Les données EXIF ne sont pas renseignées dans les photos que nous avons. Il faut se baser sur la date de modif qui peut être lue sans librairie particulière.
+				log.info("## Starting classification for [" + file.getName() + "] ...");
+				log.debug("  :> File details : " + mediaDescriptor);
+				
+				String yearMonthPath = destDir.getAbsolutePath() + File.separator + mediaDescriptor.getYearMonthDirName();
+				File yearMonthDir = FileSystemUtils.createDirIfNotExists(yearMonthPath);
+				
+				log.debug("  :> Moving : [" + file.getAbsolutePath() + "] to [" + yearMonthDir.getAbsolutePath() + "]");
+				if (!dryRun) {
+					FileSystemUtils.moveFileToDirectory(file, yearMonthDir, true);
+				}
+				log.debug("  :> File moved successfully");
+				
+				log.info("## Done.");
 				
 			}
 			
@@ -64,7 +95,7 @@ public class MediaServiceImpl implements MediaService {
 			log.error(startDir.getAbsolutePath() + " does not exists");
 		}
 		
-		log.debug("End.");
+		log.info("##### End.");
 		
 	}
 

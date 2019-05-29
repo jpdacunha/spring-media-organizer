@@ -1,25 +1,28 @@
-logging:
-    path: ./log/
 spring:
   profiles:
     active:
-    - 'prod'
+    - 'live'
   autoconfigure:
     exclude:
     - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 
 ---
-
+logging:
+    path: ./log/
 spring:
   profiles: test
 media-batch:
     paths:
-        destination: 'src//test//resources//spring-media-batch'
+        # Comma separated list where batch will lookup for files to classify
+        start-root-dirs: 'src/test/resources/spring-media-batch' #not used in test mode
+        destination-root-dir: 'src/test/resources/spring-media-batch'
 
 ---
-
+logging:
+    path: /var/log/spring-media-batch
 spring:
-  profiles: prod
+  profiles: live
 media-batch:
     paths:
-        destination: 'toto'    
+        start-root-dirs: '/volume1/photo/PHOTOS'
+        destination-root-dir: '/volume1/photo'    
