@@ -9,6 +9,8 @@ public interface MediaService {
 	
 	public void classifyPhotos() throws MediaBatchException;
 	
+	public void classifyVideos() throws MediaBatchException;
+	
 	public void classifyByYear(File startDir, File destDir, FileFilter fileFilter, boolean dryRun) throws MediaBatchException;
 
 }
