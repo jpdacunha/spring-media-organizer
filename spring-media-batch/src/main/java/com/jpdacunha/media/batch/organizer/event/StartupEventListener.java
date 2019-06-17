@@ -7,7 +7,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.service.ConfigurationService;
 import com.jpdacunha.media.batch.organizer.service.impl.MediaServiceImpl;
 

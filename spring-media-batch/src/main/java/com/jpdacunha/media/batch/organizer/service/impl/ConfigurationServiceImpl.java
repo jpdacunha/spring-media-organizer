@@ -25,11 +25,19 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 	public void verifyConfiguration() throws MediaBatchException {
 		
 		log.info("## Starting configuration verification");
-		String destPath = configuration.getPaths().getDestinationRootDir();
 		
-		File destDir = new File(destPath);
-		if (!FileSystemUtils.isDirExists(destDir)) {
-			throw new MissingDirectoryMediaBatchException(MissingDirectoryMediaBatchException.createMessage(destDir));
+		//Photo directory
+		String photoDestPath = configuration.getPaths().getDestinationRootDirPhoto();
+		File photoDestDir = new File(photoDestPath);
+		if (!FileSystemUtils.isDirExists(photoDestDir)) {
+			throw new MissingDirectoryMediaBatchException(MissingDirectoryMediaBatchException.createMessage(photoDestDir));
+		}
+		
+		//Video directory
+		String videoDestPath = configuration.getPaths().getDestinationRootDirVideo();
+		File videoDestDir = new File(videoDestPath);
+		if (!FileSystemUtils.isDirExists(videoDestDir)) {
+			throw new MissingDirectoryMediaBatchException(MissingDirectoryMediaBatchException.createMessage(videoDestDir));
 		}
 		
 		String[] startPaths = configuration.getPaths().getStartRootDirs();

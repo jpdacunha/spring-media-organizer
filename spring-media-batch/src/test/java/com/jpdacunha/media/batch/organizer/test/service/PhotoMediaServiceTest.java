@@ -16,9 +16,9 @@ import com.jpdacunha.media.batch.organizer.service.MediaService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles(profiles = "test")
-public class MediaServiceTest extends RootTest {
+public class PhotoMediaServiceTest extends PhotoRootTest {
 	
-	private static Logger log = LoggerFactory.getLogger(MediaServiceTest.class);
+	private static Logger log = LoggerFactory.getLogger(PhotoMediaServiceTest.class);
 	
 	@Autowired
 	private MediaService mediaService;
@@ -27,7 +27,7 @@ public class MediaServiceTest extends RootTest {
 	private MediaBatchYamlConfiguration configuration;
 
 	@Test
-	public void classifyByYearNominal1() {
+	public void PhotoClassifyByYearNominal1() {
 		
 		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
 		
@@ -38,7 +38,18 @@ public class MediaServiceTest extends RootTest {
 	}
 
 	@Test
-	public void classifyByYearNominalIgnoringNonImageFiles() {
+	public void PhotoClassifyByYearNominalIgnoringNonImageFiles() {
+		
+		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
+		
+		boolean result = super.classifyByYearDirEquality(configuration, mediaService, testName);
+		
+		Assert.assertTrue(result);
+		
+	}
+	
+	@Test
+	public void PhotoClassifyByYearFileAlreadyExists() {
 		
 		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
 		

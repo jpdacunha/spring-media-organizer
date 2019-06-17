@@ -15,7 +15,8 @@ media-batch:
     paths:
         # Comma separated list where batch will lookup for files to classify
         start-root-dirs: 'src/test/resources/spring-media-batch' #not used in test mode
-        destination-root-dir: 'src/test/resources/spring-media-batch'
+        destination-root-dir-photo: 'src/test/resources/spring-media-batch'
+        destination-root-dir-video: 'src/test/resources/spring-media-batch'
 
 ---
 logging:
@@ -24,5 +25,6 @@ spring:
   profiles: live
 media-batch:
     paths:
-        start-root-dirs: '/volume1/photo/PHOTOS'
-        destination-root-dir: '/volume1/photo'    
+        start-root-dirs: '/volume1/photo/A_CLASSER,/volume1/photo/phone_JeanPaul,/volume1/photo/phone_arlette,/volume1/photo/phone_elena, /volume1/photo/tablette_lg'
+        destination-root-dir-photo: '/volume1/photo'
+        destination-root-dir-video: '/volume1/video/Famille'    

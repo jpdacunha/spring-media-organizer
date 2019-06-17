@@ -26,12 +26,13 @@ public class MediaServiceImpl implements MediaService {
 	@Autowired
 	private MediaBatchYamlConfiguration configuration;
 
-	@Scheduled(cron = "0 * * * * *")
+	//@Scheduled(cron = "0 * * * * *")
+	@Scheduled(cron = "0 0/5 * * * *")
 	public void classifyPhotos() throws MediaBatchException {
 		
 		log.info("########## Starting classifyPhotos ...");
 		String[] startPaths = configuration.getPaths().getStartRootDirs();
-		String destPath = configuration.getPaths().getDestinationRootDir();
+		String destPath = configuration.getPaths().getDestinationRootDirPhoto();
 		IOFileFilter fileFilter = new ImageFileFilter();
 		
 		File destDir = new File(destPath);
@@ -75,7 +76,9 @@ public class MediaServiceImpl implements MediaService {
 				
 				//Les dates de modification ne sont pas conservées en cas de copie de fichier
 				//Les données EXIF ne sont pas renseignées dans les photos que nous avons. Il faut se baser sur la date de modif qui peut être lue sans librairie particulière.
+				log.info("##############################################################################");
 				log.info("## Starting classification for [" + file.getName() + "] ...");
+				log.info("##############################################################################");
 				log.debug("  :> File details : " + mediaDescriptor);
 				
 				String yearMonthPath = destDir.getAbsolutePath() + File.separator + mediaDescriptor.getYearMonthDirName();
@@ -87,8 +90,9 @@ public class MediaServiceImpl implements MediaService {
 				}
 				log.debug("  :> File moved successfully");
 				
+				log.info("##############################################################################");
 				log.info("## Done.");
-				
+				log.info("##############################################################################");
 			}
 			
 		} else {

@@ -180,10 +180,12 @@ public class FileSystemUtils {
 			FileUtils.moveFileToDirectory(srcFile, dir, true);
 		} catch (FileExistsException e) {
 			
-			if (deleteIfExists && srcFile.isFile()) {
+			if (deleteIfExists && srcFile.exists()) {
+				
 				log.warn(e.getMessage());
 				srcFile.delete();
-				log.warn("Duplicate [" + srcFile.getAbsoluteFile() + "] successfully deleted");
+				log.warn("Duplicated [" + srcFile.getAbsoluteFile() + "] successfully deleted");
+				
 			} else {
 				throw new MediaBatchException(e);
 			}

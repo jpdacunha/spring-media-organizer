@@ -14,13 +14,11 @@ import com.jpdacunha.media.batch.organizer.utils.FileSystemUtils;
 public abstract class RootTest {
 	
 	private static final String DOWN_ARROW = Character.toString((char)0x2BC6);
-	private static Logger log = LoggerFactory.getLogger(MediaServiceTest.class);
+	private static Logger log = LoggerFactory.getLogger(PhotoMediaServiceTest.class);
 	
-	public boolean classifyByYearDirEquality(MediaBatchYamlConfiguration configuration, MediaService mediaService, String nameofCurrMethod) {
+	public boolean classifyByYearDirEquality(String rootDestinationPath, MediaBatchYamlConfiguration configuration, MediaService mediaService, String nameofCurrMethod) {
 		
 		IOFileFilter fileFilter = new ImageFileFilter();
-		
-		String rootDestinationPath = configuration.getPaths().getDestinationRootDir();
 		
 		//File destDir = new File(configuration.getDestinationRootDir());
 		File destDir = new File(rootDestinationPath + File.separator + nameofCurrMethod + File.separator + "result");
@@ -41,6 +39,10 @@ public abstract class RootTest {
 		//Refill sources dir with content from resources dir
 		File resourcesDir = new File(rootDestinationPath + File.separator + nameofCurrMethod + File.separator + "resources");
 		FileSystemUtils.copyDirectory(resourcesDir, startDir);
+		
+		//Refill result with files if exists
+		File resourcesResultDir = new File(rootDestinationPath + File.separator + nameofCurrMethod + File.separator + "resources-result");
+		FileSystemUtils.copyDirectory(resourcesResultDir, destDir);
 		
 		return result;
 		

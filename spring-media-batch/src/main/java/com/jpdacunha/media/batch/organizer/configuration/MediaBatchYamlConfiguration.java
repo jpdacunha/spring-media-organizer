@@ -21,7 +21,8 @@ public class MediaBatchYamlConfiguration {
 	@Data
 	public static class Paths {
 		
-		private String destinationRootDir;
+		private String destinationRootDirPhoto;
+		private String destinationRootDirVideo;
 		private String[] startRootDirs;
 
 	}
