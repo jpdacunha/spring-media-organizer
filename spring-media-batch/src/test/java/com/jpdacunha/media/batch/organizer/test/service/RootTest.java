@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
-import com.jpdacunha.media.batch.organizer.filter.impl.ImageFileFilter;
 import com.jpdacunha.media.batch.organizer.service.MediaService;
 import com.jpdacunha.media.batch.organizer.utils.FileSystemUtils;
 
@@ -16,9 +15,13 @@ public abstract class RootTest {
 	private static final String DOWN_ARROW = Character.toString((char)0x2BC6);
 	private static Logger log = LoggerFactory.getLogger(PhotoMediaServiceTest.class);
 	
-	public boolean classifyByYearDirEquality(String rootDestinationPath, MediaBatchYamlConfiguration configuration, MediaService mediaService, String nameofCurrMethod) {
-		
-		IOFileFilter fileFilter = new ImageFileFilter();
+	public boolean classifyByYearDirEquality(
+			IOFileFilter fileFilter,
+			String rootDestinationPath, 
+			MediaBatchYamlConfiguration configuration, 
+			MediaService mediaService, 
+			String nameofCurrMethod
+		) {
 		
 		//File destDir = new File(configuration.getDestinationRootDir());
 		File destDir = new File(rootDestinationPath + File.separator + nameofCurrMethod + File.separator + "result");

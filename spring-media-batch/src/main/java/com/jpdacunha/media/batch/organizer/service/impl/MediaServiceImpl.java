@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;
 import com.jpdacunha.media.batch.organizer.filter.impl.ImageFileFilter;
+import com.jpdacunha.media.batch.organizer.filter.impl.VideoFileFilter;
 import com.jpdacunha.media.batch.organizer.model.MediaDescriptor;
 import com.jpdacunha.media.batch.organizer.service.MediaService;
 import com.jpdacunha.media.batch.organizer.utils.FileSystemUtils;
@@ -30,7 +31,7 @@ public class MediaServiceImpl implements MediaService {
 	@Scheduled(cron = "0 0/5 * * * *")
 	public void classifyPhotos() throws MediaBatchException {
 		
-		log.info("########## Starting classifyPhotos ...");
+		log.info("################################################## Starting classify PHOTOS //////> ...");
 		String[] startPaths = configuration.getPaths().getStartRootDirs();
 		String destPath = configuration.getPaths().getDestinationRootDirPhoto();
 		IOFileFilter fileFilter = new ImageFileFilter();
@@ -44,9 +45,31 @@ public class MediaServiceImpl implements MediaService {
 			log.info("###### Done.");
 		}
 		
-		log.info("########## End.");
+		log.info("################################################## End PHOTOS.");
 		
 	}
+	
+	//@Scheduled(cron = "0 0/5 * * * * *")
+	public void classifyVideos() throws MediaBatchException {
+		
+		log.info("################################################## Starting classify VIDEOS //////> ...");
+		String[] startPaths = configuration.getPaths().getStartRootDirs();
+		String destPath = configuration.getPaths().getDestinationRootDirVideo();
+		IOFileFilter fileFilter = new VideoFileFilter();
+		
+		File destDir = new File(destPath);
+		for (String startPath : startPaths) {
+			
+			File startDir = new File(startPath);
+			log.info("###### Processing [" + startDir.getAbsolutePath() + "] directory...");
+			classifyByYear(startDir, destDir, fileFilter, false);
+			log.info("###### Done.");
+		}
+		
+		log.info("################################################## End VIDEOS.");
+		
+	}
+	
 	
 	public void classifyByYear(File startDir, File destDir, FileFilter fileFilter, boolean dryRun) throws MediaBatchException {
 		
@@ -69,6 +92,10 @@ public class MediaServiceImpl implements MediaService {
 			
 			//Non recursive list of files
 			File[] searched = startDir.listFiles(fileFilter);
+			
+			if (searched.length == 0) {
+				log.info("Unable to find any matching files");
+			}
 			
 			for (File file : searched) {
 				

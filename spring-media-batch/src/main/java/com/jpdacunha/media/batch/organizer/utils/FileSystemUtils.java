@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileExistsException;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,8 +48,18 @@ public class FileSystemUtils {
 	}
 	
 	public static boolean isVideoFile(String path) {
-	    String mimeType = URLConnection.guessContentTypeFromName(path);
-	    return mimeType != null && mimeType.startsWith("video");
+		
+	    String extension = FilenameUtils.getExtension(path);
+	    boolean mp4 = extension != null && extension.equals("mp4");
+	    boolean avi = extension != null && extension.equals("avi");
+	    boolean flv = extension != null && extension.equals("flv");
+	    boolean mpg = extension != null && extension.equals("mpg");
+	    boolean troisgp = extension != null && extension.equals("3gp");
+	    boolean mkv = extension != null && extension.equals("mkv");
+	    boolean mov = extension != null && extension.equals("mov");
+	    
+	    return mp4 || avi || flv || mpg || troisgp || mkv || mov;
+	    
 	}
 	
 	public static boolean isImageFile(String path) {
