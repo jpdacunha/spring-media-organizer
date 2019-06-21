@@ -5,7 +5,7 @@
 Running application from command line in dev mode
 
 ```shell
-$ ./mvnw spring-boot:run
+$ ./mvnw spring-boot:run -Dspring.profiles.active=local
 ```
 
 ## Running application in docker container locally
@@ -36,7 +36,6 @@ Opening a shell in running container
 $ sudo docker container exec -i -t <container_name> ash
 ```
     Example : sudo docker container exec -i -t spring-media-batch ash
-
 
 
 ## Building and publishing docker image

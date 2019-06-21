@@ -50,13 +50,13 @@ public class FileSystemUtils {
 	public static boolean isVideoFile(String path) {
 		
 	    String extension = FilenameUtils.getExtension(path);
-	    boolean mp4 = extension != null && extension.equals("mp4");
-	    boolean avi = extension != null && extension.equals("avi");
-	    boolean flv = extension != null && extension.equals("flv");
-	    boolean mpg = extension != null && extension.equals("mpg");
-	    boolean troisgp = extension != null && extension.equals("3gp");
-	    boolean mkv = extension != null && extension.equals("mkv");
-	    boolean mov = extension != null && extension.equals("mov");
+	    boolean mp4 = extension != null && extension.equalsIgnoreCase("mp4");
+	    boolean avi = extension != null && extension.equalsIgnoreCase("avi");
+	    boolean flv = extension != null && extension.equalsIgnoreCase("flv");
+	    boolean mpg = extension != null && extension.equalsIgnoreCase("mpg");
+	    boolean troisgp = extension != null && extension.equalsIgnoreCase("3gp");
+	    boolean mkv = extension != null && extension.equalsIgnoreCase("mkv");
+	    boolean mov = extension != null && extension.equalsIgnoreCase("mov");
 	    
 	    return mp4 || avi || flv || mpg || troisgp || mkv || mov;
 	    

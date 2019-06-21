@@ -34,6 +34,7 @@ out/
 .metadata
 .classpath
 .project
+.attach_*
 .settings/
 bin/
 tmp/

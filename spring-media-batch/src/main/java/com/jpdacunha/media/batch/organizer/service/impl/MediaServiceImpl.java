@@ -27,10 +27,13 @@ public class MediaServiceImpl implements MediaService {
 	@Autowired
 	private MediaBatchYamlConfiguration configuration;
 
-	@Scheduled(cron = "0 0 0 * * ?")
+	@Scheduled(cron = "0 0 1 * * *")
 	public void classifyPhotos() throws MediaBatchException {
 		
-		log.info("################################################## Starting classify PHOTOS //////> ...");
+		log.info("#######################################################################################");
+		log.info("# Starting classify PHOTOS //////> ...");
+		log.info("#######################################################################################");
+		
 		String[] startPaths = configuration.getPaths().getStartRootDirs();
 		String destPath = configuration.getPaths().getDestinationRootDirPhoto();
 		IOFileFilter fileFilter = new ImageFileFilter();
@@ -44,14 +47,19 @@ public class MediaServiceImpl implements MediaService {
 			log.info("###### Done.");
 		}
 		
-		log.info("################################################## End PHOTOS.");
+		log.info("#######################################################################################");
+		log.info("# End PHOTOS.");
+		log.info("#######################################################################################");
 		
 	}
 	
-	@Scheduled(cron = "0 0 1 * * ?")
+	@Scheduled(cron = "0 0 3 * * *")
 	public void classifyVideos() throws MediaBatchException {
 		
-		log.info("################################################## Starting classify VIDEOS //////> ...");
+		log.info("#######################################################################################");
+		log.info("# Starting classify VIDEOS //////> ...");
+		log.info("#######################################################################################");
+		
 		String[] startPaths = configuration.getPaths().getStartRootDirs();
 		String destPath = configuration.getPaths().getDestinationRootDirVideo();
 		IOFileFilter fileFilter = new VideoFileFilter();
@@ -65,7 +73,9 @@ public class MediaServiceImpl implements MediaService {
 			log.info("###### Done.");
 		}
 		
-		log.info("################################################## End VIDEOS.");
+		log.info("#######################################################################################");
+		log.info("# End VIDEOS.");
+		log.info("#######################################################################################");
 		
 	}
 	

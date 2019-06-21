@@ -22,9 +22,20 @@ media-batch:
 logging:
     path: /var/log/spring-media-batch
 spring:
+  profiles: local
+media-batch:
+    paths:
+        start-root-dirs: '/home/dev/spring-media-batch/source'
+        destination-root-dir-photo: '/home/dev/spring-media-batch/destination-photo'
+        destination-root-dir-video: '/home/dev/spring-media-batch/destination-video'    
+---
+logging:
+    path: /var/log/spring-media-batch
+spring:
   profiles: live
 media-batch:
     paths:
         start-root-dirs: '/volume1/photo/A_CLASSER,/volume1/photo/phone_JeanPaul,/volume1/photo/phone_arlette,/volume1/photo/phone_elena, /volume1/photo/tablette_lg'
         destination-root-dir-photo: '/volume1/photo'
-        destination-root-dir-video: '/volume1/video/Famille'    
+        destination-root-dir-video: '/volume1/video/Famille'   
+   
