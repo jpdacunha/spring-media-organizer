@@ -25,7 +25,6 @@
     </appender>
 
     <logger name="org.springframework" level="INFO" additivity="true"/>
-    <logger name="org.quartz.core.QuartzSchedulerThread" level="ERROR" additivity="true"/>
     <logger name="com.jpdacunha.media.batch.organizer" level="DEBUG" additivity="true"/>
     <logger name="org.hibernate" level="INFO" additivity="true"/>
 
