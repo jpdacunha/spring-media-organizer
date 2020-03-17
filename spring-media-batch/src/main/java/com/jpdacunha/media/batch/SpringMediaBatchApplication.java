@@ -1,4 +1,4 @@
-package com.jpdacunha.media.batch.organizer;
+package com.jpdacunha.media.batch;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

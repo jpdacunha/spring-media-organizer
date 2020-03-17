@@ -1,16 +1,10 @@
 package com.jpdacunha.media.batch.organizer.test;
 
-import java.io.File;
-
-import org.apache.commons.io.FileUtils;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.jpdacunha.media.batch.organizer.utils.FileSystemUtils;
 
 
 public abstract class AbstractBaseTest {
