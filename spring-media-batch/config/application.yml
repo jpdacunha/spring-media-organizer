@@ -27,10 +27,12 @@ logging:
 spring:
   profiles: local
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/videotransfert
-    username: root
-    password: root
+    name: videotransfert-db-test
+    url: jdbc:h2:mem:videotransfert-db-test
+    username: sa
+    password: 
+    driverClassName: org.h2.Driver
+    sql-script-encoding: UTF-8
 media-batch:
     paths:
         start-root-dirs: '/home/dev/spring-media-batch/source'

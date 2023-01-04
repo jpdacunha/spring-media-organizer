@@ -380,15 +380,15 @@ public class FileSystemUtils {
 			File[] files = dir.listFiles();
 			for (File file : files) {
 				if (file.isDirectory()) {
-					log.debug(pad + " + [" + file.getName() + "] -> [directory] -> [" + file.getCanonicalPath() + "]");
+					log.info(pad + " + [" + file.getName() + "] -> [directory] -> [" + file.getCanonicalPath() + "]");
 					displayDirectoryContent(file, pad + "  ");
 				} else {
-					log.debug(pad + "  - [" + file.getName() + "] -> [file] -> [" + file.getCanonicalPath() + "]");
+					log.info(pad + "  - [" + file.getName() + "] -> [file] -> [" + file.getCanonicalPath() + "]");
 				}
 			}
 			
 			if (files.length == 0) {
-				log.debug(pad + "  - <Empty>");
+				log.info(pad + "  - <Empty>");
 			}
 			
 		} catch (IOException e) {
