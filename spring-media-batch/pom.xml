@@ -97,6 +97,11 @@
 		    <version>2.7.1</version> 
 		    <scope>test</scope> 
 		</dependency>
+		<dependency>
+			<groupId>dev.brachtendorf</groupId>
+			<artifactId>JImageHash</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

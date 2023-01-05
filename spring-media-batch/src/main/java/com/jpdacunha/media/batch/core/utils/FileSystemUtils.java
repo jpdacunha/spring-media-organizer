@@ -1,11 +1,14 @@
-package com.jpdacunha.media.batch.organizer.utils;
+package com.jpdacunha.media.batch.core.utils;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileExistsException;
 import org.apache.commons.io.FileUtils;
@@ -15,12 +18,54 @@ import org.slf4j.LoggerFactory;
 
 import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;
 
+import dev.brachtendorf.jimagehash.hash.Hash;
+import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
+
 public class FileSystemUtils {
 	
 	private static Logger log = LoggerFactory.getLogger(FileSystemUtils.class);
 
 	private FileSystemUtils() {
 		super();
+	}
+	
+	public static boolean imagesAreExactlyTheSame(HashingAlgorithm hasher, File fileA, File fileB) throws IOException {
+		
+		if (fileA == null || !fileA.exists()) {
+			log.debug("fileA is null or does not exists");
+			return false;
+		}
+		
+		if (fileB == null || !fileB.exists()) {
+			log.debug("fileB is null or does not exists");
+			return false;
+		}
+		
+		if (!FileSystemUtils.isImageFile(fileA)) {
+			log.debug("fileA is not an image");
+			return false;
+		}
+		
+		if (!FileSystemUtils.isImageFile(fileB)) {
+			log.debug("fileB is not an image");
+			return false;			
+		}
+	
+		BufferedImage imageA = ImageIO.read(fileA);
+		BufferedImage imageB = ImageIO.read(fileB);
+		
+		//Generate the hash for each image
+		Hash hash1 = hasher.hash(imageA);
+		Hash hash2 = hasher.hash(imageB);
+
+		//Compute a similarity score
+		// Ranges between 0 - 1. The lower the more similar the images are.
+		double similarityScore = hash1.normalizedHammingDistance(hash2);
+		
+		log.debug("Calculated similarity score : [" + similarityScore + "] for [" + fileA.getAbsolutePath() + "] and [" + fileA.getAbsolutePath() + "]");
+
+		return similarityScore == 0.0d;
+		
 	}
 	
 	public static boolean isVideoFile(File file) {
@@ -203,6 +248,16 @@ public class FileSystemUtils {
 			
 		} catch (IOException e) {
 			throw new MediaBatchException(e);
+		}
+		
+	}
+	
+	public static void removeIfExists(File toRemoveFile) {
+		
+		if (FileSystemUtils.isFileExists(toRemoveFile)) {
+			toRemoveFile.delete();
+		} else {
+			log.debug("toRemoveFile does not exists");
 		}
 		
 	}
@@ -400,5 +455,6 @@ public class FileSystemUtils {
 	public static boolean isEmpty(File file) {
 		return file != null && file.isDirectory() && file.list().length == 0;
 	}
+
 
 }

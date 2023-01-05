@@ -11,13 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.jpdacunha.media.batch.core.filter.impl.ImageFileFilter;
+import com.jpdacunha.media.batch.core.filter.impl.VideoFileFilter;
+import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;
-import com.jpdacunha.media.batch.organizer.filter.impl.ImageFileFilter;
-import com.jpdacunha.media.batch.organizer.filter.impl.VideoFileFilter;
 import com.jpdacunha.media.batch.organizer.model.MediaDescriptor;
 import com.jpdacunha.media.batch.organizer.service.MediaService;
-import com.jpdacunha.media.batch.organizer.utils.FileSystemUtils;
 
 @Service
 public class MediaServiceImpl implements MediaService {

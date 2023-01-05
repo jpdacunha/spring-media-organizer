@@ -1,4 +1,4 @@
-package com.jpdacunha.media.batch.organizer.test.service;
+package com.jpdacunha.media.batch.organizer.test.core;
 
 import java.io.File;
 
@@ -6,14 +6,16 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.service.MediaService;
-import com.jpdacunha.media.batch.organizer.utils.FileSystemUtils;
+import com.jpdacunha.media.batch.removeduplicatesfotos.configuration.RemoveDuplicatesFotosYamlConfiguration;
+import com.jpdacunha.media.batch.removeduplicatesfotos.service.RemoveDuplicateImagesService;
 
 public abstract class RootTest {
 	
 	private static final String DOWN_ARROW = Character.toString((char)0x2BC6);
-	private static Logger log = LoggerFactory.getLogger(PhotoMediaServiceTest.class);
+	private static Logger log = LoggerFactory.getLogger(RootTest.class);
 	
 	public boolean classifyByYearDirEquality(
 			IOFileFilter fileFilter,
@@ -49,6 +51,33 @@ public abstract class RootTest {
 		
 		return result;
 		
+	}
+	
+	public boolean removeImageDuplicates(
+			RemoveDuplicatesFotosYamlConfiguration configuration, 
+			RemoveDuplicateImagesService service, 
+			String nameofCurrMethod
+		) {
+		
+		String rootDestinationPath = "src/test/resources/spring-media-batch";
+		
+		File srcDir = new File(rootDestinationPath + File.separator + nameofCurrMethod + File.separator + "source");
+		File expectedDir = new File(rootDestinationPath + File.separator + nameofCurrMethod + File.separator + "expected");
+		
+		service.removeDuplicates(srcDir, false);
+		
+		boolean result = FileSystemUtils.isDirEquals(expectedDir, srcDir);
+		
+		if (!result) {
+			displayResult(expectedDir, srcDir);
+		} 
+		
+		//Refill sources dir with content from resources dir
+		File resourcesDir = new File(rootDestinationPath + File.separator + nameofCurrMethod + File.separator + "resources");
+		FileSystemUtils.copyDirectory(resourcesDir, srcDir);
+		
+		return result;
+	
 	}
 	
 	public void displayResult(File expected, File result) {

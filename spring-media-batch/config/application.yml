@@ -16,12 +16,16 @@ spring:
     password: 
     driverClassName: org.h2.Driver
     sql-script-encoding: UTF-8
-media-batch:
+media-batch-organizer:
     paths:
         # Comma separated list where batch will lookup for files to classify
         start-root-dirs: 'src/test/resources/spring-media-batch' #not used in test mode
         destination-root-dir-photo: 'src/test/resources/spring-media-batch'
         destination-root-dir-video: 'src/test/resources/spring-media-batch'
+media-batch-remove-duplicates-fotos:
+    paths:
+        # Comma separated list where batch will lookup for duplicates
+        start-root-dirs: 'src/test/resources/spring-media-batch' #not used in test mode
 ---
 logging:
   file:
@@ -35,11 +39,15 @@ spring:
     password: 
     driverClassName: org.h2.Driver
     sql-script-encoding: UTF-8
-media-batch:
+media-batch-organizer:
     paths:
         start-root-dirs: '/home/dev/spring-media-batch/source'
         destination-root-dir-photo: '/home/dev/spring-media-batch/destination-photo'
-        destination-root-dir-video: '/home/dev/spring-media-batch/destination-video'    
+        destination-root-dir-video: '/home/dev/spring-media-batch/destination-video' 
+media-batch-remove-duplicates-fotos:
+    paths:
+        # Comma separated list where batch will lookup for duplicates
+        start-root-dirs: 'src/test/resources/spring-media-batch' #not used in test mode   
 ---
 logging:
   file:
@@ -53,9 +61,13 @@ spring:
     password: 
     driverClassName: org.h2.Driver
     sql-script-encoding: UTF-8
-media-batch:
+media-batch-organizer:
     paths:
         start-root-dirs: '/volume1/photo/A_CLASSER,/volume1/photo/phone_JeanPaul,/volume1/photo/phone_arlette,/volume1/photo/phone_elena,/volume1/photo/tablette_lg'
         destination-root-dir-photo: '/volume1/photo'
-        destination-root-dir-video: '/volume1/video/Famille'   
+        destination-root-dir-video: '/volume1/video/Famille'
+media-batch-remove-duplicates-fotos:
+    paths:
+        # Comma separated list where batch will lookup for duplicates
+        start-root-dirs: '/volume1/photo/2022' #not used in test mode   
    

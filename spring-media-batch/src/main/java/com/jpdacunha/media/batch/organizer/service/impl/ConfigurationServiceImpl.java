@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;
 import com.jpdacunha.media.batch.organizer.exception.MissingDirectoryMediaBatchException;
 import com.jpdacunha.media.batch.organizer.service.ConfigurationService;
-import com.jpdacunha.media.batch.organizer.utils.FileSystemUtils;
 
 @Service
 public class ConfigurationServiceImpl implements ConfigurationService {

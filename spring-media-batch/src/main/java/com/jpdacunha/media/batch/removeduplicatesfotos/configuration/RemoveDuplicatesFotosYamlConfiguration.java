@@ -1,4 +1,4 @@
-package com.jpdacunha.media.batch.organizer.configuration;
+package com.jpdacunha.media.batch.removeduplicatesfotos.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -11,32 +11,18 @@ import lombok.ToString;
 
 @Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties("media-batch-organizer")
+@ConfigurationProperties("media-batch-remove-duplicates-fotos")
 @Getter @Setter
 @ToString
-public class MediaBatchYamlConfiguration {
+public class RemoveDuplicatesFotosYamlConfiguration {
 	
 	public Paths paths;
 
 	@Data
 	public static class Paths {
 		
-		private String destinationRootDirPhoto;
-		private String destinationRootDirVideo;
 		private String[] startRootDirs;
 		
-		public String getDestinationRootDirPhoto() {
-			return destinationRootDirPhoto;
-		}
-		public void setDestinationRootDirPhoto(String destinationRootDirPhoto) {
-			this.destinationRootDirPhoto = destinationRootDirPhoto;
-		}
-		public String getDestinationRootDirVideo() {
-			return destinationRootDirVideo;
-		}
-		public void setDestinationRootDirVideo(String destinationRootDirVideo) {
-			this.destinationRootDirVideo = destinationRootDirVideo;
-		}
 		public String[] getStartRootDirs() {
 			return startRootDirs;
 		}

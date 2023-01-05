@@ -1,4 +1,4 @@
-package com.jpdacunha.media.batch.organizer.test.service;
+package com.jpdacunha.media.batch.organizer.test.tests;
 
 import org.junit.Assert;
 import org.junit.Test;

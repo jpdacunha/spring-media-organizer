@@ -1,4 +1,4 @@
-package com.jpdacunha.media.batch.organizer.test.service;
+package com.jpdacunha.media.batch.organizer.test.tests;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
