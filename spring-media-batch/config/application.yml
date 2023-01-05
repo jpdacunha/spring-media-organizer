@@ -47,7 +47,7 @@ media-batch-organizer:
 media-batch-remove-duplicates-fotos:
     paths:
         # Comma separated list where batch will lookup for duplicates
-        start-root-dirs: 'src/test/resources/spring-media-batch' #not used in test mode   
+        start-root-dirs: 'src/test/resources/spring-media-batch' 
 ---
 logging:
   file:
@@ -69,5 +69,5 @@ media-batch-organizer:
 media-batch-remove-duplicates-fotos:
     paths:
         # Comma separated list where batch will lookup for duplicates
-        start-root-dirs: '/volume1/photo/2022' #not used in test mode   
+        start-root-dirs: '/volume1/photo/2022'  
    

@@ -29,6 +29,33 @@ To push new image to docker Hub execute
 $ docker push jpdacunha/spring-media-batch:0.0.1-SNAPSHOT
 ```
 
+In case of permission denied errors do the following
+Authorize docker execution without sudo
+```shell
+$ sudo groupadd docker
+$ sudo usermod -aG docker $USER
+$ newgrp docker
+```
+
+Create a settings.xml under ~/.m2 path and add the Docker Hub credentials
+```
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                          https://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <servers>
+        <server>
+            <id>registry.hub.docker.com</id>
+            <username>USERNAME</username>
+            <password>PASSWORD</password>
+            <configuration>
+                <email>EMAIL_ADDRESS</email>
+            </configuration>
+        </server>
+    </servers>
+</settings>
+```
+
 ## Running application in docker container localy
 
 Creating new docker container and run it localy
