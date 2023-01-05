@@ -8,12 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.service.MediaService;
 
-@RunWith(SpringRunner.class)
+
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @ActiveProfiles(profiles = "test")
 public class PhotoMediaServiceTest extends PhotoRootTest {

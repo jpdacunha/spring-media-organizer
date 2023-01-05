@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="logback.xsd">
+<configuration>
     
     <springProperty name="LOG_PATH" source="logging.path"/>
 
@@ -20,12 +19,12 @@
 
         <encoder>
             <charset>UTF-8</charset>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%level] [%thread] [%logger:%line] %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%level] %magenta([%thread]) [%logger:%line] %msg%n</pattern>
 		</encoder>
     </appender>
 
     <logger name="org.springframework" level="INFO" additivity="true"/>
-    <logger name="com.jpdacunha.media.batch.organizer" level="DEBUG" additivity="true"/>
+    <logger name="com.jpdacunha.media.batch.organizer.*" level="DEBUG" additivity="true"/>
     <logger name="org.hibernate" level="INFO" additivity="true"/>
 
 

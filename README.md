@@ -58,16 +58,17 @@ $ sudo docker container exec -i -t <container_name> ash
 ```
     Example : sudo docker container exec -i -t spring-media-batch ash
 
-## Utilities
+## Running Junit tests
 
-Modification date update of an existing file
+Run your tests using custom configuration. In eclipse Open your Junit running test configuration and add following values to JVM arguments
 
 ```shell
-touch -m -a -t <date> <file>
+-Dspring.config.location="/home/dev/git/spring-media-organizer/spring-media-batch/config/application.yml"
+-Dspring.profiles.active=test
 ```
 
-Exemple
+File classification is based on files's update date. In order to correctly setup files modification dates please execute this script BEFORE tuning Junit tests :
 
 ```shell
-touch -m -a -t 201512180130.09 ./354PPP.jpg
+$ cd <git_project_home>/spring-media-organizer/spring-media-batch/setup-tests-env.sh
 ```
