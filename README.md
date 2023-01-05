@@ -29,7 +29,8 @@ To push new image to docker Hub execute
 $ docker push jpdacunha/spring-media-batch:0.0.1-SNAPSHOT
 ```
 
-In case of permission denied errors do the following
+# In case of permission denied errors do the following
+
 Authorize docker execution without sudo
 ```shell
 $ sudo groupadd docker
