@@ -26,7 +26,8 @@ mvn clean install -Dmaven.test.skip=true
 To push new image to docker Hub execute
 
 ```shell
-$ docker push jpdacunha/spring-media-batch:0.0.1-SNAPSHOT
+$ docker login -u "<USERNAME>" -p "<PASSWORD>" registry.hub.docker.com
+$ docker push registry.hub.docker.com/jpdacunha/spring-media-batch:2.1.0-SNAPSHOT
 ```
 
 ### In case of permission denied errors do the following

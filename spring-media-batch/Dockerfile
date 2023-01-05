@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM adoptopenjdk/openjdk11:jre-11.0.16.1_1-alpine
 VOLUME /tmp
 COPY ./target/spring-media-batch.jar ./app.jar
 COPY ./config/application.yml ./
