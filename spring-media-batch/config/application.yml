@@ -5,6 +5,7 @@ spring:
 
 ---
 logging:
+  file:
     path: ./log/
 spring:
   profiles: test
@@ -23,6 +24,7 @@ media-batch:
         destination-root-dir-video: 'src/test/resources/spring-media-batch'
 ---
 logging:
+  file:
     path: /var/log/spring-media-batch
 spring:
   profiles: local
@@ -40,6 +42,7 @@ media-batch:
         destination-root-dir-video: '/home/dev/spring-media-batch/destination-video'    
 ---
 logging:
+  file:
     path: /var/log/spring-media-batch
 spring:
   profiles: live

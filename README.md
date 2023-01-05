@@ -5,7 +5,7 @@
 Running application from command line in dev mode
 
 ```shell
-$ ./mvnw spring-boot:run -Dspring.profiles.active=local -Dspring.config.location="/home/dev/git/spring-media-organizer/spring-media-batch/config/application.yml"
+$ ./mvnw spring-boot:run -Dspring-boot.run.profiles=local -Dspring.config.location="/home/dev/git/spring-media-organizer/spring-media-batch/config/application.yml"
 ```
 
 ## Building and publishing docker image

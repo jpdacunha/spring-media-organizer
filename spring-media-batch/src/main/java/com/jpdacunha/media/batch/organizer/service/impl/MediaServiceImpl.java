@@ -31,7 +31,7 @@ public class MediaServiceImpl implements MediaService {
 	public void classifyPhotos() throws MediaBatchException {
 		
 		log.info("#######################################################################################");
-		log.info("# Starting classify PHOTOS //////> ...");
+		log.info("# Starting classify FOTOS //////> ...");
 		log.info("#######################################################################################");
 		
 		String[] startPaths = configuration.getPaths().getStartRootDirs();
@@ -48,12 +48,12 @@ public class MediaServiceImpl implements MediaService {
 		}
 		
 		log.info("#######################################################################################");
-		log.info("# End PHOTOS.");
+		log.info("# End FOTOS.");
 		log.info("#######################################################################################");
 		
 	}
 	
-	@Scheduled(cron = "0 0 3 * * *")
+	@Scheduled(cron = "0 0 2 * * *")
 	public void classifyVideos() throws MediaBatchException {
 		
 		log.info("#######################################################################################");
