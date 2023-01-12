@@ -1,5 +1,6 @@
 package com.jpdacunha.media.batch.removeduplicatesfotos.test.tests;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,9 @@ public class RemoveDuplicateFotosTest extends RootTest {
 		
 		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
 		
-		super.removeImageDuplicates(configuration, service, testName);
+		boolean result = super.removeImageDuplicates(configuration, service, testName);
+		
+		Assert.assertTrue(result);
 		
 	}
 	
@@ -36,7 +39,31 @@ public class RemoveDuplicateFotosTest extends RootTest {
 		
 		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
 		
-		super.removeImageDuplicates(configuration, service, testName);
+		boolean result = super.removeImageDuplicates(configuration, service, testName);
+		
+		Assert.assertTrue(result);
+		
+	}
+	
+	@Test
+	public void RemoveDuplicatesNominalWithFolders() {
+		
+		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
+		
+		boolean result = super.removeImageDuplicates(configuration, service, testName);
+		
+		Assert.assertTrue(result);
+		
+	}
+	
+	@Test
+	public void RemoveDuplicatesNominalWithDuplicates() {
+		
+		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
+		
+		boolean result = super.removeImageDuplicates(configuration, service, testName);
+		
+		Assert.assertTrue(result);
 		
 	}
 

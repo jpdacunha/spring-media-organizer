@@ -6,6 +6,8 @@ import com.jpdacunha.media.batch.removeduplicatesfotos.exception.RemoveDuplicate
 
 public interface RemoveDuplicateImagesService {
 	
+	public static final String DUPLICATE_EXTENSION = ".duplicate";
+	
 	public void removeDuplicateFotos() throws RemoveDuplicateImageshException;
 	
 	public void removeDuplicates(File startDir, boolean dryRun);

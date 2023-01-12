@@ -35,7 +35,10 @@
 	<logger name="org.springframework" level="INFO" additivity="true" />
 	<logger name="org.hibernate" level="INFO" additivity="true" />
 	<logger name="org.quartz" level="INFO" additivity="true" />
-	<logger name="com.jpdacunha.media.batch.core.utils" level="INFO" additivity="true" />"
+
+	<logger name="com.jpdacunha.media.batch.core.utils.*" level="DEBUG" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
 	
 	<logger name="com.jpdacunha.media.batch.organizer.*" level="DEBUG" additivity="true">
 		<appender-ref ref="ORGANIZER_FILE" />

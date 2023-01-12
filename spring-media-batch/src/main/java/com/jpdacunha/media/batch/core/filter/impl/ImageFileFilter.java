@@ -14,5 +14,4 @@ public class ImageFileFilter extends AbstractFileFilter implements FileFilter {
         return FileSystemUtils.isImageFile(file);
     }
 
-
 }

@@ -162,6 +162,12 @@ public class FileSystemUtils {
 		
 	}
 	
+	public static boolean isValidFile(File file) {
+		
+		return file != null && file.exists() && file.isFile();
+		
+	}
+	
 	private static File getDir(String path, boolean createDirIfNotExists) throws MediaBatchException {
 
 		if (path == null) {
@@ -383,15 +389,18 @@ public class FileSystemUtils {
 										} else {
 											log.debug("[" + file1.getAbsolutePath() + "] & [" + file2.getAbsolutePath() + "] have not the same content");
 										}
+										
 										if(!isSameDirs){
 											break;
 										}
 										
+									} else {
+										log.debug("file1 and file2 doesn't have the same name.");
 									}
 									
 								} else {
-									log.debug("We will go to study another file in directory");
-									isSameDirs = false;
+									log.debug("file2 = " + file2.getAbsolutePath() + " is not a file");
+									continue;
 								}
 		
 							}

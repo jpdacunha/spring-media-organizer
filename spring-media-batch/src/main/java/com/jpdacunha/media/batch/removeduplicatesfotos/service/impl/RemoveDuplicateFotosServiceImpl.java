@@ -3,23 +3,25 @@ package com.jpdacunha.media.batch.removeduplicatesfotos.service.impl;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.jpdacunha.media.batch.core.filter.impl.ImageFileFilter;
 import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
 import com.jpdacunha.media.batch.organizer.service.impl.MediaServiceImpl;
 import com.jpdacunha.media.batch.removeduplicatesfotos.configuration.RemoveDuplicatesFotosYamlConfiguration;
 import com.jpdacunha.media.batch.removeduplicatesfotos.exception.RemoveDuplicateImageshException;
+import com.jpdacunha.media.batch.removeduplicatesfotos.filter.impl.ImageFileFilterAndDuplicates;
 import com.jpdacunha.media.batch.removeduplicatesfotos.service.RemoveDuplicateImagesService;
 
 import dev.brachtendorf.jimagehash.hashAlgorithms.AverageHash;
@@ -69,8 +71,6 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 		log.info("##### Starting removeDuplicates ...");
 		log.info("## Applied configuration : [" + configuration + "]");
 		
-		FileFilter fileFilter = new ImageFileFilter();
-		
 		if (startDir == null) {
 			throw new RemoveDuplicateImageshException("Missing required parameter");
 		}
@@ -82,33 +82,42 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 		if (startDir.exists()) {
 			
 			//Non recursive list of files
-			List<File> toRemove = new ArrayList<>();
+			Set<String> toRemove = new HashSet<>();
 			
-			File[] searched = startDir.listFiles(fileFilter);
-			List<File> searchedList = new LinkedList<>(Arrays.asList(searched));
+			FileFilter fileFilter = new ImageFileFilterAndDuplicates();
+			
+			//File[] searched = startDir.listFiles(fileFilter);
+			List<File> searchedList = (List<File>) FileUtils.listFilesAndDirs(startDir, (IOFileFilter)fileFilter, TrueFileFilter.INSTANCE);
 			
 			if (searchedList.size() == 0) {
 				log.info("No files in specified directories.");
 			} else {
-				log.debug("Found [" + searchedList.size() + "] images in [" + startDir.getAbsolutePath() + "]");
+				log.debug("Found [" + searchedList.size() + "] s in [" + startDir.getAbsolutePath() + "]");
 			}
 			
 			//Searching for images to remove
-			for (final Iterator<File> iter = searchedList.listIterator(); iter.hasNext();) {
+			for (final Iterator<File> searchedListIterator = searchedList.listIterator(); searchedListIterator.hasNext();) {
 				
-				File file = iter.next();
+				File file = searchedListIterator.next();
+				
+				if (!FileSystemUtils.isValidFile(file)) {
+					continue;
+				}
 					
 				//Les dates de modification ne sont pas conservées en cas de copie de fichier
 				//Les données EXIF ne sont pas renseignées dans les photos que nous avons. Il faut se baser sur la date de modif qui peut être lue sans librairie particulière.
 				log.debug("## Start to remove duplicates images for [" + file.getName() + "] ...");
 				
-				File[] toCompare = startDir.listFiles(fileFilter);
-				List<File> toCompareList = new LinkedList<>(Arrays.asList(toCompare));
+				List<File> toCompareList = (List<File>) FileUtils.listFilesAndDirs(startDir, (IOFileFilter)fileFilter, TrueFileFilter.INSTANCE);
 						
 				//Using an iterator in order to remove the file instance during iteration
-				for (final Iterator<File> iter2 = toCompareList.listIterator(); iter2.hasNext();) {
+				for (final Iterator<File> toCompareListIterator = toCompareList.listIterator(); toCompareListIterator.hasNext();) {
 					
-					File toCompareFile = iter2.next();
+					File toCompareFile = toCompareListIterator.next();
+					
+					if (!FileSystemUtils.isValidFile(toCompareFile)) {
+						continue;
+					}
 					
 					try {
 						
@@ -117,15 +126,26 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 						
 						log.debug("  :> Comparing[" + fileAbsolutePath + "] and [" + toCompareAbsolutePath + "].");
 						
-						if (!fileAbsolutePath.equals(toCompareAbsolutePath)) {
+						if (toCompareFile.exists() && file.exists() && !fileAbsolutePath.equals(toCompareAbsolutePath)) {
 							
-							if (FileSystemUtils.imagesAreExactlyTheSame(hasher, file, toCompareFile)) {
+							if (toCompareAbsolutePath.endsWith(RemoveDuplicateImagesService.DUPLICATE_EXTENSION)) {
 								
-								log.debug("  :> Registering [" + toCompareAbsolutePath + "] as removed file");
+								toRemove.add(toCompareAbsolutePath);
+								log.debug("  :> Registering [" + toCompareFile.getAbsolutePath() + "] as file to remove");
+								
+							} else if (FileSystemUtils.imagesAreExactlyTheSame(hasher, file, toCompareFile)) {
+								
+								File renamedToCompareFile = new File(toCompareAbsolutePath + RemoveDuplicateImagesService.DUPLICATE_EXTENSION);
+								
+								boolean renamed = toCompareFile.renameTo(renamedToCompareFile);
+								
 								//Clone the object in order to not share reference
-								toRemove.add(new File(toCompareAbsolutePath));
-								//This is why we use an iterator
-								searchedList.remove(toCompareFile);
+								if (renamed) {
+									toRemove.add(renamedToCompareFile.getAbsolutePath());
+									log.debug("  :> Renaming and registering [" + renamedToCompareFile.getAbsolutePath() + "] as file to remove");
+								} else {
+									log.error("Unexpected error while renaming [" + toCompareAbsolutePath + "].");
+								}
 								
 							} else {
 								log.debug("  :> No match for[" + fileAbsolutePath + "] and [" + toCompareAbsolutePath + "]");
@@ -145,13 +165,19 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 				
 			}
 			
-			for (File toRemoveFile : toRemove) {
-				log.info("  :> Removing : [" + toRemoveFile.getAbsolutePath() + "]");
+			log.info("## Start to physically remove identified duplicates ...");
+			//Removing registered files
+			for (String toRemoveFilePath : toRemove) {
+				
+				log.info("  :> Removing : [" + toRemoveFilePath + "]");
 				if (!dryRun) {
+					File toRemoveFile = new File(toRemoveFilePath);
 					FileSystemUtils.removeIfExists(toRemoveFile);
 				}
 				log.info("  :> File removed successfully");
+				
 			}
+			log.info("## Done.");
 			
 		} else {
 			log.error(startDir.getAbsolutePath() + " does not exists");

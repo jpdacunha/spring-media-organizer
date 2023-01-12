@@ -35,12 +35,12 @@
 	<logger name="org.springframework" level="INFO" additivity="true" />
 	<logger name="org.hibernate" level="INFO" additivity="true" />
 	<logger name="org.quartz" level="INFO" additivity="true" />
-	
-	<logger name="com.jpdacunha.media.batch.organizer.*" level="INFO" additivity="true">
+
+	<logger name="com.jpdacunha.media.batch.organizer.*" level="INFO" additivity="false">
 		<appender-ref ref="ORGANIZER_FILE" />
 	</logger>
 	
-	<logger name="com.jpdacunha.media.batch.removeduplicatesfotos.*" level="INFO" additivity="true">
+	<logger name="com.jpdacunha.media.batch.removeduplicatesfotos.*" level="INFO" additivity="false">
 		<appender-ref ref="REMOVE_DUPLICATES_FOTOS_FILE" />
 	</logger>
 	
