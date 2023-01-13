@@ -56,7 +56,8 @@ public abstract class RootTest {
 	public boolean removeImageDuplicates(
 			RemoveDuplicatesFotosYamlConfiguration configuration, 
 			RemoveDuplicateImagesService service, 
-			String nameofCurrMethod
+			String nameofCurrMethod,
+			boolean dryRun
 		) {
 		
 		String rootDestinationPath = "src/test/resources/spring-media-batch";
@@ -64,7 +65,7 @@ public abstract class RootTest {
 		File srcDir = new File(rootDestinationPath + File.separator + nameofCurrMethod + File.separator + "source");
 		File expectedDir = new File(rootDestinationPath + File.separator + nameofCurrMethod + File.separator + "expected");
 		
-		service.removeDuplicates(srcDir, false);
+		service.removeDuplicates(srcDir, dryRun);
 		
 		boolean result = FileSystemUtils.isDirEquals(expectedDir, srcDir);
 		
@@ -76,7 +77,17 @@ public abstract class RootTest {
 		File resourcesDir = new File(rootDestinationPath + File.separator + nameofCurrMethod + File.separator + "resources");
 		FileSystemUtils.copyDirectory(resourcesDir, srcDir);
 		
-		return result;
+		return result;	
+		
+	}
+	
+	public boolean removeImageDuplicates(
+			RemoveDuplicatesFotosYamlConfiguration configuration, 
+			RemoveDuplicateImagesService service, 
+			String nameofCurrMethod
+		) {
+		
+		return removeImageDuplicates(configuration, service, nameofCurrMethod, false);
 	
 	}
 	

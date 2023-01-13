@@ -137,7 +137,12 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 								
 								File renamedToCompareFile = new File(toCompareAbsolutePath + RemoveDuplicateImagesService.DUPLICATE_EXTENSION);
 								
-								boolean renamed = toCompareFile.renameTo(renamedToCompareFile);
+								boolean renamed = false;
+								if (!dryRun) {
+									renamed = toCompareFile.renameTo(renamedToCompareFile);
+								} else {
+									renamed =true;
+								}
 								
 								//Clone the object in order to not share reference
 								if (renamed) {
