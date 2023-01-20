@@ -50,21 +50,36 @@ public class FileSystemUtils {
 			log.debug("fileB is not an image");
 			return false;			
 		}
-	
-		BufferedImage imageA = ImageIO.read(fileA);
-		BufferedImage imageB = ImageIO.read(fileB);
 		
-		//Generate the hash for each image
-		Hash hash1 = hasher.hash(imageA);
-		Hash hash2 = hasher.hash(imageB);
-
-		//Compute a similarity score
-		// Ranges between 0 - 1. The lower the more similar the images are.
-		double similarityScore = hash1.normalizedHammingDistance(hash2);
+		try {
+			
+			BufferedImage imageA = ImageIO.read(fileA);
+			
+			try {
+				
+				BufferedImage imageB = ImageIO.read(fileB);
+				
+				//Generate the hash for each image
+				Hash hash1 = hasher.hash(imageA);
+				Hash hash2 = hasher.hash(imageB);
 		
-		log.debug("Calculated similarity score : [" + similarityScore + "] for [" + fileA.getAbsolutePath() + "] and [" + fileA.getAbsolutePath() + "]");
-
-		return similarityScore == 0.0d;
+				//Compute a similarity score
+				// Ranges between 0 - 1. The lower the more similar the images are.
+				double similarityScore = hash1.normalizedHammingDistance(hash2);
+				
+				log.debug("Calculated similarity score : [" + similarityScore + "] for [" + fileA.getAbsolutePath() + "] and [" + fileA.getAbsolutePath() + "]");
+		
+				return similarityScore == 0.0d;
+				
+			} catch (javax.imageio.IIOException e) {
+				log.warn("Problem reading content of [" + fileB.getAbsolutePath() + "] : " + e.getMessage());
+				return false;
+			}
+			
+		} catch (javax.imageio.IIOException e) {
+			log.warn("Problem reading content of [" + fileA.getAbsolutePath() + "] : " + e.getMessage());
+			return false;
+		}
 		
 	}
 	

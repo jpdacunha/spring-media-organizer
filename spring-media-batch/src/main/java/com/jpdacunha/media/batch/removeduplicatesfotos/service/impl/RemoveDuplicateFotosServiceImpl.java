@@ -161,6 +161,7 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 						}
 						
 					} catch (IOException e) {
+						log.error(e.getMessage() ,e);
 						throw new RemoveDuplicateImageshException(e);
 					}
 					

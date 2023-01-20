@@ -77,5 +77,16 @@ public class RemoveDuplicateFotosTest extends RootTest {
 		Assert.assertTrue(result);
 		
 	}
+	
+	@Test
+	public void RemoveDuplicatesNominalReelFiles() {
+		
+		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
+		
+		boolean result = super.removeImageDuplicates(configuration, service, testName, true);
+		
+		Assert.assertTrue(result);
+		
+	}
 
 }
