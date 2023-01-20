@@ -2,6 +2,8 @@ package com.jpdacunha.media.batch.organizer.service.impl;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Locale;
 
 import org.apache.commons.io.filefilter.IOFileFilter;
@@ -30,6 +32,7 @@ public class MediaServiceImpl implements MediaService {
 	@Scheduled(cron = "0 0 1 * * *")
 	public void classifyPhotos() throws MediaBatchException {
 		
+		Instant start = Instant.now();
 		log.info("#######################################################################################");
 		log.info("# Starting classify FOTOS //////> ...");
 		log.info("#######################################################################################");
@@ -47,8 +50,11 @@ public class MediaServiceImpl implements MediaService {
 			log.info("###### Done.");
 		}
 		
+		Instant end = Instant.now();
+		Duration exectime = Duration.between(start, end);
+		
 		log.info("#######################################################################################");
-		log.info("# End FOTOS.");
+		log.info("# End FOTOS. Executed in " + exectime);
 		log.info("#######################################################################################");
 		
 	}
@@ -56,6 +62,7 @@ public class MediaServiceImpl implements MediaService {
 	@Scheduled(cron = "0 0 2 * * *")
 	public void classifyVideos() throws MediaBatchException {
 		
+		Instant start = Instant.now();
 		log.info("#######################################################################################");
 		log.info("# Starting classify VIDEOS //////> ...");
 		log.info("#######################################################################################");
@@ -73,8 +80,11 @@ public class MediaServiceImpl implements MediaService {
 			log.info("###### Done.");
 		}
 		
+		Instant end = Instant.now();
+		Duration exectime = Duration.between(start, end);
+		
 		log.info("#######################################################################################");
-		log.info("# End VIDEOS.");
+		log.info("# End VIDEOS. Executed in " + exectime);
 		log.info("#######################################################################################");
 		
 	}

@@ -3,6 +3,8 @@ package com.jpdacunha.media.batch.removeduplicatesfotos.service.impl;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -44,6 +46,7 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 	@Scheduled(cron = "0 0 2 * * *")
 	public void removeDuplicateFotos() throws RemoveDuplicateImageshException {
 		
+		Instant start = Instant.now();
 		log.info("#######################################################################################");
 		log.info("# Starting remove duplicates FOTOS //////> ...");
 		log.info("#######################################################################################");
@@ -59,9 +62,12 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 			log.info("###### Done.");
 			
 		}
+		
+		Instant end = Instant.now();
+		Duration exectime = Duration.between(start, end);
 			
 		log.info("#######################################################################################");
-		log.info("# End remove duplicates FOTOS.");
+		log.info("# End remove duplicates FOTOS. Executed in " + exectime);
 		log.info("#######################################################################################");
 		
 	}
