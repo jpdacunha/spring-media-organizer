@@ -20,7 +20,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
-import com.jpdacunha.media.batch.organizer.service.impl.MediaServiceImpl;
 import com.jpdacunha.media.batch.removeduplicatesfotos.configuration.RemoveDuplicatesFotosYamlConfiguration;
 import com.jpdacunha.media.batch.removeduplicatesfotos.exception.RemoveDuplicateImageshException;
 import com.jpdacunha.media.batch.removeduplicatesfotos.filter.impl.ImageFileFilterAndDuplicates;
@@ -32,7 +31,7 @@ import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 @Service
 public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesService {
 	
-	private static Logger log = LoggerFactory.getLogger(MediaServiceImpl.class);
+	private static Logger log = LoggerFactory.getLogger(RemoveDuplicateFotosServiceImpl.class);
 	
 	@Autowired
 	private RemoveDuplicatesFotosYamlConfiguration configuration;
@@ -98,7 +97,7 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 			if (searchedList.size() == 0) {
 				log.info("No files in specified directories.");
 			} else {
-				log.debug("Found [" + searchedList.size() + "] s in [" + startDir.getAbsolutePath() + "]");
+				log.debug("Found [" + searchedList.size() + "] files in [" + startDir.getAbsolutePath() + "]");
 			}
 			
 			//Searching for images to remove

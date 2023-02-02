@@ -1,4 +1,4 @@
-package com.jpdacunha.media.batch.organizer.service;
+package com.jpdacunha.media.batch.core.service;
 
 import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;
 
