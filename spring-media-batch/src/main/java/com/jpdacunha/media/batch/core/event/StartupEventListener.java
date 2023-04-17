@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import com.jpdacunha.media.batch.core.service.ConfigurationService;
+import com.jpdacunha.media.batch.core.configuration.service.ConfigurationService;
 
 @Component
 public class StartupEventListener implements ApplicationListener<ContextRefreshedEvent> {

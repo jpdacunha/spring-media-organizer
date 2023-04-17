@@ -10,12 +10,14 @@ logging:
 spring:
   profiles: test
   datasource:
-    name: videotransfert-db-test
-    url: jdbc:h2:mem:videotransfert-db-test
+    platform: test
+    name: spring-media-batch-ds
+    url: jdbc:h2:mem:spring-media-batch-db
     username: sa
     password: 
     driverClassName: org.h2.Driver
     sql-script-encoding: UTF-8
+    initialization-mode: always
 media-batch-organizer:
     paths:
         # Comma separated list where batch will lookup for files to classify
@@ -33,12 +35,18 @@ logging:
 spring:
   profiles: local
   datasource:
-    name: videotransfert-db-test
-    url: jdbc:h2:mem:videotransfert-db-test
+    platform: local
+    name: spring-media-batch-ds
+    url: jdbc:h2:file:/home/dev/spring-media-batch/database
     username: sa
     password: 
     driverClassName: org.h2.Driver
     sql-script-encoding: UTF-8
+    initialization-mode: always
+  h2:
+    # Use http://localhost:8080/h2-console to access console
+    console:
+      enabled: true
 media-batch-organizer:
     paths:
         start-root-dirs: '/home/dev/spring-media-batch/source'
@@ -55,12 +63,18 @@ logging:
 spring:
   profiles: live
   datasource:
-    name: videotransfert-db-test
-    url: jdbc:h2:mem:videotransfert-db-test
+    platform: live
+    name: spring-media-batch-ds
+    url: jdbc:h2:file:/home/spring-media-batch/database
     username: sa
     password: 
     driverClassName: org.h2.Driver
     sql-script-encoding: UTF-8
+    initialization-mode: always
+  h2:
+    # Use http://localhost:8080/h2-console to access console
+    console:
+      enabled: true
 media-batch-organizer:
     paths:
         start-root-dirs: '/volume1/photo/A_CLASSER,/volume1/photo/phone_JeanPaul,/volume1/photo/phone_arlette,/volume1/photo/phone_elena,/volume1/photo/tablette_lg'

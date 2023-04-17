@@ -1,0 +1,1 @@
+INSERT INTO BATCH_CURSOR (ID, PATH, CREATION_DATE, LAST_EXECUTION_DATE) VALUES ('e58ed763-928c-4155-bee9-fdbaaadc15f3', 'src/test/resources/spring-media-batch', '2022-12-31 23.59.59', '2023-04-17 18.16.12');

@@ -1,4 +1,4 @@
-package com.jpdacunha.media.batch.core.service.impl;
+package com.jpdacunha.media.batch.core.configuration.service.impl;
 
 import java.io.File;
 
@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jpdacunha.media.batch.core.service.ConfigurationService;
+import com.jpdacunha.media.batch.core.configuration.service.ConfigurationService;
 import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;

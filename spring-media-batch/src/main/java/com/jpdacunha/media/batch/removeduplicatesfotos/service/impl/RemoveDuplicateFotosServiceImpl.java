@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.jpdacunha.media.batch.core.database.model.Cursor;
+import com.jpdacunha.media.batch.core.database.repository.DatabaseServiceRepository;
 import com.jpdacunha.media.batch.core.model.HumanReadableDurationModel;
 import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
 import com.jpdacunha.media.batch.removeduplicatesfotos.configuration.RemoveDuplicatesFotosYamlConfiguration;
@@ -33,6 +35,9 @@ import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesService {
 	
 	private static Logger log = LoggerFactory.getLogger(RemoveDuplicateFotosServiceImpl.class);
+	
+	@Autowired
+	private DatabaseServiceRepository repository;
 	
 	@Autowired
 	private RemoveDuplicatesFotosYamlConfiguration configuration;
@@ -57,7 +62,11 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 			
 			File startDir = new File(startPath);
 			log.info("###### Processing [" + startDir.getAbsolutePath() + "] directory...");
-			//Remove dryRun option here
+			
+			//TODO:JDA to be continued
+			initializeCursors(startDir);
+			
+			//TODO:JDA Remove dryRun option here
 			removeDuplicates(startDir, true);
 			log.info("###### Done.");
 			
@@ -69,6 +78,19 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 		log.info("#######################################################################################");
 		log.info("# End remove duplicates FOTOS. Executed in " + exectime);
 		log.info("#######################################################################################");
+		
+	}
+	
+	public void initializeCursors(File startDir) {
+		
+		List<Cursor> cursors = repository.findAllCursors();
+		log.info("##### Starting initializeCursors ...");
+		
+		if (cursors.size() == 0) {
+			log.info("No defined cursors found.");
+		} else {
+			log.info("Found [" + cursors.size() + "] in database");
+		}
 		
 	}
 	
