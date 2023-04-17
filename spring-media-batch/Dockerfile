@@ -1,5 +1,6 @@
 FROM adoptopenjdk/openjdk11:jre-11.0.16.1_1-alpine
 VOLUME /tmp
+RUN mkdir -p /home/spring-media-batch/database
 COPY ./target/spring-media-batch.jar ./app.jar
 COPY ./config/application.yml ./
 ENV JAVA_OPTS=""
