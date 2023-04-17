@@ -2,7 +2,6 @@ package com.jpdacunha.media.batch.organizer.service.impl;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.time.Duration;
 import java.time.Instant;
 import java.util.Locale;
 
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.jpdacunha.media.batch.core.filter.impl.ImageFileFilter;
 import com.jpdacunha.media.batch.core.filter.impl.VideoFileFilter;
+import com.jpdacunha.media.batch.core.model.HumanReadableDurationModel;
 import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;
@@ -51,7 +51,7 @@ public class MediaServiceImpl implements MediaService {
 		}
 		
 		Instant end = Instant.now();
-		Duration exectime = Duration.between(start, end);
+		String exectime = new HumanReadableDurationModel(start, end).toHumanReadable();
 		
 		log.info("#######################################################################################");
 		log.info("# End FOTOS. Executed in " + exectime);
@@ -81,7 +81,7 @@ public class MediaServiceImpl implements MediaService {
 		}
 		
 		Instant end = Instant.now();
-		Duration exectime = Duration.between(start, end);
+		String exectime = new HumanReadableDurationModel(start, end).toHumanReadable();
 		
 		log.info("#######################################################################################");
 		log.info("# End VIDEOS. Executed in " + exectime);

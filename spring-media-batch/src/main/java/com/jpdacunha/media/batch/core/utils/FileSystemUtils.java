@@ -2,6 +2,7 @@ package com.jpdacunha.media.batch.core.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -51,13 +52,21 @@ public class FileSystemUtils {
 			return false;			
 		}
 		
-		try {
+		long lengthA = fileA.length();
+		long lengthB = fileB.length();
+		
+		if (lengthA > 0L && lengthB > 0L && lengthA != lengthB ) {
+			log.debug("Files cannot be the same because they have a different file size");
+			return false;
+		}
+		
+		try (FileInputStream streamA = new FileInputStream(fileA)) {
 			
-			BufferedImage imageA = ImageIO.read(fileA);
+			BufferedImage imageA = ImageIO.read(streamA);
 			
-			try {
+			try (FileInputStream streamB = new FileInputStream(fileB)) {
 				
-				BufferedImage imageB = ImageIO.read(fileB);
+				BufferedImage imageB = ImageIO.read(streamB);
 				
 				//Generate the hash for each image
 				Hash hash1 = hasher.hash(imageA);
