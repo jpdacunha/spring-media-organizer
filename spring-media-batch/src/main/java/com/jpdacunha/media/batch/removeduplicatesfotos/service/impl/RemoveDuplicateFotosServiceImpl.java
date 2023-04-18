@@ -18,12 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.jpdacunha.media.batch.core.database.model.Cursor;
-import com.jpdacunha.media.batch.core.database.repository.DatabaseServiceRepository;
 import com.jpdacunha.media.batch.core.model.HumanReadableDurationModel;
+import com.jpdacunha.media.batch.core.service.CursorService;
 import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
 import com.jpdacunha.media.batch.removeduplicatesfotos.configuration.RemoveDuplicatesFotosYamlConfiguration;
-import com.jpdacunha.media.batch.removeduplicatesfotos.exception.RemoveDuplicateImageshException;
+import com.jpdacunha.media.batch.removeduplicatesfotos.exception.RemoveDuplicateImagesException;
 import com.jpdacunha.media.batch.removeduplicatesfotos.filter.impl.ImageFileFilterAndDuplicates;
 import com.jpdacunha.media.batch.removeduplicatesfotos.model.DuplicatePhotosModel;
 import com.jpdacunha.media.batch.removeduplicatesfotos.service.RemoveDuplicateImagesService;
@@ -37,10 +36,10 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 	private static Logger log = LoggerFactory.getLogger(RemoveDuplicateFotosServiceImpl.class);
 	
 	@Autowired
-	private DatabaseServiceRepository repository;
+	private RemoveDuplicatesFotosYamlConfiguration configuration;
 	
 	@Autowired
-	private RemoveDuplicatesFotosYamlConfiguration configuration;
+	private CursorService cursorService;
 	
 	// Key bit resolution
 	private int keyLength = 64;
@@ -49,7 +48,7 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 	private HashingAlgorithm hasher = new AverageHash(keyLength);
 
 	@Scheduled(cron = "0 0 2 * * *")
-	public void removeDuplicateFotos() throws RemoveDuplicateImageshException {
+	public void removeDuplicateFotos() throws RemoveDuplicateImagesException {
 		
 		Instant start = Instant.now();
 		log.info("#######################################################################################");
@@ -83,28 +82,25 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 	
 	public void initializeCursors(File startDir) {
 		
-		List<Cursor> cursors = repository.findAllCursors();
 		log.info("##### Starting initializeCursors ...");
 		
-		if (cursors.size() == 0) {
-			log.info("No defined cursors found.");
-		} else {
-			log.info("Found [" + cursors.size() + "] in database");
-		}
+		cursorService.cleanDatabaseCursors();
+		
+		log.info("##### End.");
 		
 	}
-	
+
 	public void removeDuplicates(File startDir, boolean dryRun) {
 		
 		log.info("##### Starting removeDuplicates ...");
 		log.info("## Applied configuration : [" + configuration + "]");
 		
 		if (startDir == null) {
-			throw new RemoveDuplicateImageshException("Missing required parameter");
+			throw new RemoveDuplicateImagesException("Missing required parameter");
 		}
 		
 		if (!startDir.isDirectory()) {
-			throw new RemoveDuplicateImageshException(startDir.getAbsolutePath() + " is not a valid source directory");
+			throw new RemoveDuplicateImagesException(startDir.getAbsolutePath() + " is not a valid source directory");
 		}
 		
 		if (startDir.exists()) {
@@ -192,7 +188,7 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 						
 					} catch (IOException e) {
 						log.error(e.getMessage() ,e);
-						throw new RemoveDuplicateImageshException(e);
+						throw new RemoveDuplicateImagesException(e);
 					}
 					
 				}

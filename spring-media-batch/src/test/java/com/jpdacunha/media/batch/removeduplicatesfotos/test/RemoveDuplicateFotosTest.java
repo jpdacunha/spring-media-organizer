@@ -1,4 +1,4 @@
-package com.jpdacunha.media.batch.removeduplicatesfotos.test.tests;
+package com.jpdacunha.media.batch.removeduplicatesfotos.test;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -2,7 +2,7 @@ package com.jpdacunha.media.batch.removeduplicatesfotos.exception;
 
 import java.io.IOException;
 
-public class RemoveDuplicateImageshException extends RuntimeException {
+public class RemoveDuplicateImagesException extends RuntimeException {
 	
 
 	/**
@@ -11,15 +11,15 @@ public class RemoveDuplicateImageshException extends RuntimeException {
 	private static final long serialVersionUID = -3673352368797824380L;
 	
 
-	public RemoveDuplicateImageshException() {
+	public RemoveDuplicateImagesException() {
 		super();
 	}
 
-	public RemoveDuplicateImageshException(String msg) {
+	public RemoveDuplicateImagesException(String msg) {
 		super(msg);
 	}
 
-	public RemoveDuplicateImageshException(IOException e) {
+	public RemoveDuplicateImagesException(IOException e) {
 		super(e);
 	}
 

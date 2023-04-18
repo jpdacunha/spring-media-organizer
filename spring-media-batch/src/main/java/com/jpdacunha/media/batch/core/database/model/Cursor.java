@@ -10,14 +10,20 @@ public class Cursor {
 	private Date creationDate;
 	private Date lastExecutionDate;
 
-	public Cursor(String path, Date creationDate, Date lastExecutionDate) {
+	public Cursor(String path, Date creationDate) {
 		super();
 		this.id = UUID.randomUUID().toString();
 		this.path = path;
 		this.creationDate = creationDate;
-		this.lastExecutionDate = lastExecutionDate;
 	}
 
+	public Cursor(String id, String path, Date creationDate) {
+		super();
+		this.id = id;
+		this.path = path;
+		this.creationDate = creationDate;
+	}
+	
 	public Cursor(String id, String path, Date creationDate, Date lastExecutionDate) {
 		super();
 		this.id = id;
