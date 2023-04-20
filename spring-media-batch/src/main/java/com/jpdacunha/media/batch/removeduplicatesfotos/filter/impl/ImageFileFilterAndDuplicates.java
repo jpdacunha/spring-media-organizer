@@ -13,9 +13,9 @@ public class ImageFileFilterAndDuplicates extends AbstractFileFilter implements 
 	@Override
     public boolean accept(final File file) {
 		
-        //return true;
 		boolean isRenamedFile = (file != null && file.getName().endsWith(RemoveDuplicateImagesService.DUPLICATE_EXTENSION));
-		return FileSystemUtils.isImageFile(file) || isRenamedFile;
+		
+		return isRenamedFile || FileSystemUtils.isImageFile(file);
 		
     }
 

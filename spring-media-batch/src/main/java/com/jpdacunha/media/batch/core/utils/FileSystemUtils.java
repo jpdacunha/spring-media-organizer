@@ -24,6 +24,8 @@ import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 
 public class FileSystemUtils {
 	
+	private static final String EA_DIR = "@eaDir";
+	
 	private static Logger log = LoggerFactory.getLogger(FileSystemUtils.class);
 
 	private FileSystemUtils() {
@@ -76,7 +78,7 @@ public class FileSystemUtils {
 				// Ranges between 0 - 1. The lower the more similar the images are.
 				double similarityScore = hash1.normalizedHammingDistance(hash2);
 				
-				log.debug("Calculated similarity score : [" + similarityScore + "] for [" + fileA.getAbsolutePath() + "] and [" + fileA.getAbsolutePath() + "]");
+				log.debug("Calculated similarity score : [" + similarityScore + "] for [" + fileA.getAbsolutePath() + "] and [" + fileB.getAbsolutePath() + "]");
 		
 				return similarityScore == 0.0d;
 				
@@ -188,7 +190,9 @@ public class FileSystemUtils {
 	
 	public static boolean isValidFile(File file) {
 		
-		return file != null && file.exists() && file.isFile();
+		boolean excludedPath = (file != null && file.getAbsolutePath().contains(EA_DIR));
+		
+		return file != null && file.exists() && file.isFile() && !excludedPath;
 		
 	}
 	

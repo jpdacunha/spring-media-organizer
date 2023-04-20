@@ -86,6 +86,8 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 		
 		cursorService.cleanDatabaseCursors();
 		
+		cursorService.registerCursors(startDir);
+		
 		log.info("##### End.");
 		
 	}
@@ -93,7 +95,6 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 	public void removeDuplicates(File startDir, boolean dryRun) {
 		
 		log.info("##### Starting removeDuplicates ...");
-		log.info("## Applied configuration : [" + configuration + "]");
 		
 		if (startDir == null) {
 			throw new RemoveDuplicateImagesException("Missing required parameter");
@@ -102,6 +103,8 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 		if (!startDir.isDirectory()) {
 			throw new RemoveDuplicateImagesException(startDir.getAbsolutePath() + " is not a valid source directory");
 		}
+		
+		log.info("## Applied configuration : [" + configuration + "]");
 		
 		if (startDir.exists()) {
 			

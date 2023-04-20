@@ -99,4 +99,10 @@ public class CursorServiceImpl implements CursorService {
 		return repository.findAllCursors();
 	}
 
+	@Override
+	public void registerCursors(File startDir) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

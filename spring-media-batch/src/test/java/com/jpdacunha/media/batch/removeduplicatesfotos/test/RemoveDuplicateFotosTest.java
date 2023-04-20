@@ -24,6 +24,17 @@ public class RemoveDuplicateFotosTest extends RootTest {
 	private RemoveDuplicatesFotosYamlConfiguration configuration;
 	
 	@Test
+	public void RemoveDuplicatesIgnorePaths() {
+		
+		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
+		
+		boolean result = super.removeImageDuplicates(configuration, service, testName);
+		
+		Assert.assertTrue(result);
+		
+	}
+	
+	@Test
 	public void RemoveDuplicatesNominal() {
 		
 		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
