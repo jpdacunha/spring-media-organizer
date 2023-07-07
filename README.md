@@ -2,10 +2,10 @@
 
 ## Running application in development
 
-Running application from command line in dev mode
+Running application from command line in dev mode. Go to project home and run dedicated script
 
 ```shell
-$ ./mvnw spring-boot:run -Dspring-boot.run.profiles=local -Dspring.config.location="/home/dev/git/spring-media-organizer/spring-media-batch/config/application.yml"
+$ ./run-dev.sh
 ```
 
 ## Building and publishing docker image

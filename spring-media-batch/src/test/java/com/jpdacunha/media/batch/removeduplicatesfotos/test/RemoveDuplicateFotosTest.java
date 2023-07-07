@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.jpdacunha.media.batch.organizer.test.core.RootTest;
+import com.jpdacunha.media.batch.core.RootTest;
 import com.jpdacunha.media.batch.removeduplicatesfotos.configuration.RemoveDuplicatesFotosYamlConfiguration;
 import com.jpdacunha.media.batch.removeduplicatesfotos.service.RemoveDuplicateImagesService;
 

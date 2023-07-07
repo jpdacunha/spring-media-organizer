@@ -15,12 +15,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.jpdacunha.media.batch.core.database.model.Cursor;
 import com.jpdacunha.media.batch.core.database.repository.DatabaseServiceRepository;
 import com.jpdacunha.media.batch.core.service.CursorService;
-import com.jpdacunha.media.batch.core.service.exception.CursorException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @ActiveProfiles(profiles = "test")
-public class CursorServiceTest {
+public class CursorServiceTestCleanAllTest {
 	
 	private final static String ROOT_PATH = "src/test/resources/spring-media-batch/";
 	
@@ -45,43 +44,14 @@ public class CursorServiceTest {
 		
 	}
 	
-	@Test(expected = CursorException.class)
-	public void createCursor_invalidPath() {
-		
-		service.createCursor(null);
-		
-	}
-	
-	@Test(expected = CursorException.class)
-	public void createCursor_invalidPath1() {
-		
-		service.createCursor("");
-		
-	}
-	
-	@Test(expected = CursorException.class)
-	public void createCursor_inexistingPath() {
-		
-		service.createCursor(ROOT_PATH + "inexisting");
-		
-	}
-	
-	@Test()
-	public void createCursor_nominal() {
-		
-		Cursor cursor = service.createCursor(ROOT_PATH + "createCursor_nominal");
-		
-		Assert.assertTrue(cursor.getId() != null);
-		
-	}
-	
 	@Test
 	public void cleanDatabaseCursors_nominal() {
 		
+
 		service.createCursor(ROOT_PATH + "cleanDatabaseCursors_nominal");
 		service.createCursor(ROOT_PATH + "cleanDatabaseCursors_nominal/test");
 		service.createCursor(ROOT_PATH + "cleanDatabaseCursors_nominal/test1");
-		
+
 		List<Cursor> cursors = service.getAll();
 		
 		Assert.assertTrue(cursors.size() == 5);

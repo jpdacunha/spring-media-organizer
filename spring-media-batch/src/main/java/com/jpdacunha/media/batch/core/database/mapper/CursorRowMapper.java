@@ -16,8 +16,8 @@ public class CursorRowMapper implements RowMapper<Cursor> {
 		Cursor cursor = new Cursor(
 				rs.getString(BatchCursorTable.ID), 
 				rs.getString(BatchCursorTable.PATH), 
-				rs.getDate(BatchCursorTable.LAST_EXECUTION_DATE), 
-				rs.getDate(BatchCursorTable.CREATION_DATE)
+				rs.getTimestamp(BatchCursorTable.CREATION_DATE),
+				rs.getTimestamp(BatchCursorTable.LAST_EXECUTION_DATE)
 		);
 		return cursor;
 		

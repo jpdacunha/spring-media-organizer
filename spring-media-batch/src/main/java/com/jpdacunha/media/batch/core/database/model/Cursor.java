@@ -57,6 +57,9 @@ public class Cursor {
 		this.lastExecutionDate = lastExecutionDate;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Cursor [id=" + id + ", path=" + path + ", creationDate=" + creationDate + ", lastExecutionDate=" + lastExecutionDate + "]";
+	}
 
 }

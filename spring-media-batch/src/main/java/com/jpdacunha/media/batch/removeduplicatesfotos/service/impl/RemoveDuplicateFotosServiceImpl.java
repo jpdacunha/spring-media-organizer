@@ -60,13 +60,19 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 		for (String startPath : startPaths) {
 			
 			File startDir = new File(startPath);
+			
 			log.info("###### Processing [" + startDir.getAbsolutePath() + "] directory...");
 			
 			//TODO:JDA to be continued
-			initializeCursors(startDir);
+			cleanCursors(startDir);
+			
+			File workDir = cursorService.getWorkDirFromRegisteredCursors(startDir);
 			
 			//TODO:JDA Remove dryRun option here
-			removeDuplicates(startDir, true);
+			removeDuplicates(workDir, true);
+			
+			cursorService.createOrUpdateCursor(startPath);
+			
 			log.info("###### Done.");
 			
 		}
@@ -80,46 +86,43 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 		
 	}
 	
-	public void initializeCursors(File startDir) {
+	public void cleanCursors(File startDir) {
 		
-		log.info("##### Starting initializeCursors ...");
+		log.info("##### Starting cleaning cursors ...");
 		
 		cursorService.cleanDatabaseCursors();
-		
-		cursorService.registerCursors(startDir);
 		
 		log.info("##### End.");
 		
 	}
 
-	public void removeDuplicates(File startDir, boolean dryRun) {
+	public void removeDuplicates(File toAnalyzeDir, boolean dryRun) {
 		
 		log.info("##### Starting removeDuplicates ...");
 		
-		if (startDir == null) {
+		if (toAnalyzeDir == null) {
 			throw new RemoveDuplicateImagesException("Missing required parameter");
 		}
 		
-		if (!startDir.isDirectory()) {
-			throw new RemoveDuplicateImagesException(startDir.getAbsolutePath() + " is not a valid source directory");
+		if (!toAnalyzeDir.isDirectory()) {
+			throw new RemoveDuplicateImagesException(toAnalyzeDir.getAbsolutePath() + " is not a valid source directory");
 		}
 		
 		log.info("## Applied configuration : [" + configuration + "]");
 		
-		if (startDir.exists()) {
+		if (toAnalyzeDir.exists()) {
 			
 			//Non recursive list of files
 			Set<DuplicatePhotosModel> toRemove = new HashSet<>();
 			
-			FileFilter fileFilter = new ImageFileFilterAndDuplicates();
-			
-			//File[] searched = startDir.listFiles(fileFilter);
-			List<File> searchedList = (List<File>) FileUtils.listFilesAndDirs(startDir, (IOFileFilter)fileFilter, TrueFileFilter.INSTANCE);
+			FileFilter fileFilter = new ImageFileFilterAndDuplicates();		
+
+			List<File> searchedList = (List<File>) FileUtils.listFilesAndDirs(toAnalyzeDir, (IOFileFilter)fileFilter, TrueFileFilter.INSTANCE);
 			
 			if (searchedList.size() == 0) {
 				log.info("No files in specified directories.");
 			} else {
-				log.info("Found [" + searchedList.size() + "] files in [" + startDir.getAbsolutePath() + "]");
+				log.info("Found [" + searchedList.size() + "] files in [" + toAnalyzeDir.getAbsolutePath() + "]");
 			}
 			
 			//Searching for images to remove
@@ -133,7 +136,7 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 				
 				log.debug("## Start to remove duplicates images for [" + file.getName() + "] ...");
 				
-				List<File> toCompareList = (List<File>) FileUtils.listFilesAndDirs(startDir, (IOFileFilter)fileFilter, TrueFileFilter.INSTANCE);
+				List<File> toCompareList = (List<File>) FileUtils.listFilesAndDirs(toAnalyzeDir, (IOFileFilter)fileFilter, TrueFileFilter.INSTANCE);
 						
 				//Using an iterator in order to remove the file instance during iteration
 				for (final Iterator<File> toCompareListIterator = toCompareList.listIterator(); toCompareListIterator.hasNext();) {
@@ -218,7 +221,7 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 			log.info("## Done.");
 			
 		} else {
-			log.error(startDir.getAbsolutePath() + " does not exists");
+			log.error(toAnalyzeDir.getAbsolutePath() + " does not exists");
 		}
 		
 		log.info("##### End.");

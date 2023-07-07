@@ -32,11 +32,11 @@
 		</encoder>
 	</appender>
 	
-	<logger name="org.springframework" level="INFO" additivity="true" />
-	<logger name="org.hibernate" level="INFO" additivity="true" />
-	<logger name="org.quartz" level="INFO" additivity="true" />
+	<logger name="org.springframework" 	level="INFO" additivity="true" />
+	<logger name="org.hibernate" 		level="INFO" additivity="true" />
+	<logger name="org.quartz" 			level="INFO" additivity="true" />
 
-	<logger name="com.jpdacunha.media.batch.core.utils.*" level="DEBUG" additivity="false">
+	<logger name="com.jpdacunha.media.batch.*" level="DEBUG" additivity="true">
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
@@ -47,7 +47,7 @@
 	<logger name="com.jpdacunha.media.batch.removeduplicatesfotos.*" level="DEBUG" additivity="true">
 		<appender-ref ref="REMOVE_DUPLICATES_FOTOS_FILE" />
 	</logger>
-	
+
 	<root>
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="ORGANIZER_FILE" />

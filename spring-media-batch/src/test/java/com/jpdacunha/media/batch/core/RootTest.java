@@ -1,4 +1,4 @@
-package com.jpdacunha.media.batch.organizer.test.core;
+package com.jpdacunha.media.batch.core;
 
 import java.io.File;
 

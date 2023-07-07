@@ -1,11 +1,11 @@
-package com.jpdacunha.media.batch.organizer.test.tests;
+package com.jpdacunha.media.batch.organizer.test;
 
 import org.apache.commons.io.filefilter.IOFileFilter;
 
+import com.jpdacunha.media.batch.core.RootTest;
 import com.jpdacunha.media.batch.core.filter.impl.VideoFileFilter;
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.service.MediaService;
-import com.jpdacunha.media.batch.organizer.test.core.RootTest;
 
 public abstract class VideoRootTest extends RootTest {
 

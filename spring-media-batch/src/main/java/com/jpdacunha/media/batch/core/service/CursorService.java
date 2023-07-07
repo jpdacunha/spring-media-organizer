@@ -9,12 +9,22 @@ public interface CursorService {
 
 	public void cleanDatabaseCursors();
 	
-	public Cursor createCursor(String path);
-	
 	public List<Cursor> getAll();
 
 	public void cleanAllCursors();
 
-	public void registerCursors(File startDir);
+	public Cursor findByPath(String path);
+
+	public boolean cursorExists(String path);
+
+	public Cursor findOlderCursor();
+
+	public File getWorkDirFromRegisteredCursors(File startDir);
+
+	public Cursor createOrUpdateCursor(String path);
+
+	public Cursor updateLastExecutionDate(String path);
+
+	public Cursor createCursor(String path);
 
 }
