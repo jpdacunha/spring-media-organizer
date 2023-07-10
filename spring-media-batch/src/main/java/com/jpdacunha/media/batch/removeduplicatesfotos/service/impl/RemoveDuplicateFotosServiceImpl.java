@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.jpdacunha.media.batch.core.database.model.Cursor;
 import com.jpdacunha.media.batch.core.model.HumanReadableDurationModel;
 import com.jpdacunha.media.batch.core.service.CursorService;
 import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
@@ -51,6 +52,10 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 	public void removeDuplicateFotos() throws RemoveDuplicateImagesException {
 		
 		Instant start = Instant.now();
+		
+		//TODO:JDA Remove dryRun option here
+		boolean dryRun = true;
+		
 		log.info("#######################################################################################");
 		log.info("# Starting remove duplicates FOTOS //////> ...");
 		log.info("#######################################################################################");
@@ -63,15 +68,17 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 			
 			log.info("###### Processing [" + startDir.getAbsolutePath() + "] directory...");
 			
-			//TODO:JDA to be continued
-			cleanCursors(startDir);
+			cleanCursors();
+			
+			displayAllCursors();
 			
 			File workDir = cursorService.getWorkDirFromRegisteredCursors(startDir);
 			
-			//TODO:JDA Remove dryRun option here
-			removeDuplicates(workDir, true);
+			removeDuplicates(workDir, dryRun);
 			
-			cursorService.createOrUpdateCursor(startPath);
+			if (!dryRun) {
+				cursorService.createOrUpdateCursor(startPath);
+			}
 			
 			log.info("###### Done.");
 			
@@ -86,7 +93,23 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 		
 	}
 	
-	public void cleanCursors(File startDir) {
+	public void displayAllCursors() {
+		
+		log.info("##### Displaying registered cursors ...");
+		
+		List<Cursor> cursors = cursorService.getAll();
+		
+		for (Cursor cursor : cursors) {
+			
+			log.info("  Found " + cursor.toString());
+			
+		}
+		
+		log.info("##### End.");
+		
+	}
+	
+	public void cleanCursors() {
 		
 		log.info("##### Starting cleaning cursors ...");
 		
