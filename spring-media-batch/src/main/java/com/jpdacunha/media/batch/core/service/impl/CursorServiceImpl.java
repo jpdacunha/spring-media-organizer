@@ -74,6 +74,8 @@ public class CursorServiceImpl implements CursorService {
 						break;
 					}
 					
+				} else {
+					log.info("Exclusion of [" + file.getAbsolutePath() + "] because is not matching applicable FileFilter"); 
 				}
 				
 			}
@@ -213,36 +215,46 @@ public class CursorServiceImpl implements CursorService {
 		
 	}
 	
-	@Override
-	public  Cursor createCursor(String path) {
+	private  Cursor createCursor(String path, Date cursorDate) {
 		
 		if (path == null || (path != null && path.equals(""))) {
 			
 			throw new CursorException("Invalid null or empty path");
 			
-		} else {
+		} 
+		
+		if (cursorDate == null) {
+			throw new CursorException("Invalid null cursor date");
+		}
 			
-			File file = new File(path);
-			
-			if (file.exists()) {
-			
-				if (file.isDirectory()) {
-					
-					Cursor cursor = new Cursor(file.getAbsolutePath(), new Date());
-					
-					repository.insert(cursor);
-					
-					return repository.findCursorByPath(cursor.getPath());
-					
-				} else {
-					throw new CursorException("Invalid path : provided path is not a directory");
-				}
+		File file = new File(path);
+		
+		if (file.exists()) {
+		
+			if (file.isDirectory()) {
+				
+				Cursor cursor = new Cursor(file.getAbsolutePath(), new Date());
+				
+				repository.insert(cursor);
+				
+				return repository.findCursorByPath(cursor.getPath());
 				
 			} else {
-				throw new CursorException("[" + file.getAbsolutePath() + "] does not exists.");
+				throw new CursorException("Invalid path : provided path is not a directory");
 			}
 			
+		} else {
+			throw new CursorException("[" + file.getAbsolutePath() + "] does not exists.");
 		}
+			
+		
+		
+	}
+	
+	@Override
+	public  Cursor createCursor(String path) {
+		
+		return createCursor(path, new Date());
 		
 	}
 

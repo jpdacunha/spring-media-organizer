@@ -83,5 +83,5 @@ media-batch-organizer:
 media-batch-remove-duplicates-fotos:
     paths:
         # Comma separated list where batch will lookup for duplicates
-        start-root-dirs: '/volume1/photo/2022'  
+        start-root-dirs: '/volume1/photo'  
    

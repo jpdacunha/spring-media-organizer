@@ -56,8 +56,6 @@ public class CursorServiceTestCleanAllTest {
 		
 		Assert.assertTrue(cursors.size() == 5);
 		
-		//See data-test.sql
-		
 		service.cleanDatabaseCursors();
 		
 		cursors = service.getAll();

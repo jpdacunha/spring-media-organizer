@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -174,6 +175,30 @@ public class CursorServiceCRUDTest {
 		log.debug(sdfDate.format(afterDate) + " >= " + sdfDate.format(beforeDate));
 		
 		Assert.assertTrue(afterDate.after(beforeDate));
+		
+	}
+	
+	@Test
+	public void findOlderCursor_nominal() {
+		
+		String testedPath1 = ROOT_PATH + "findOlderCursor_nominal/test";
+		Date currentDate = new Date();
+		Cursor cursor1 = new Cursor(testedPath1, currentDate, currentDate);
+		repository.insert(cursor1);
+		
+		String testedPath2 = ROOT_PATH + "findOlderCursor_nominal/test1";
+		Date olderDate2 = DateUtils.addDays(currentDate, -1);
+		Cursor cursor2 = new Cursor(testedPath2, olderDate2, olderDate2);
+		repository.insert(cursor2);
+		
+		String testedPath3 = ROOT_PATH + "findOlderCursor_nominal/test3";
+		Date olderDate3 = DateUtils.addDays(currentDate, -5);
+		Cursor cursor3 = new Cursor(testedPath3, olderDate3, olderDate3);
+		repository.insert(cursor3);
+		
+		Cursor olderCursor = service.findOlderCursor();
+		
+		Assert.assertTrue(olderCursor.getPath().equals(testedPath3));
 		
 	}
 

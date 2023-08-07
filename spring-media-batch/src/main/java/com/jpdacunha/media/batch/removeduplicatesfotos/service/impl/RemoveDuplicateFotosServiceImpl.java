@@ -76,9 +76,7 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 			
 			removeDuplicates(workDir, dryRun);
 			
-			if (!dryRun) {
-				cursorService.createOrUpdateCursor(startPath);
-			}
+			cursorService.createOrUpdateCursor(startPath);
 			
 			log.info("###### Done.");
 			
