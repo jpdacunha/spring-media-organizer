@@ -18,9 +18,26 @@ $ mvn clean install
 ```
 
 To build the image skipping tests execution
+
 ```shell
 $ cd ./spring-media-organizer/spring-media-batch/
 mvn clean install -Dmaven.test.skip=true
+```
+
+To change image version before uploading to docker hub, update parent project pom.xml version
+
+```
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.5.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.jdacunha</groupId>
+	<artifactId>spring-media-batch</artifactId>
+	<version><VERSION_TO_CHANGE></version>
+	<name>spring-media-batch</name>
+	<description>Media organization batch</description>
 ```
 
 To push new image to docker Hub execute
