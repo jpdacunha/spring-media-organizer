@@ -8,7 +8,19 @@
 		</encoder>
 	</appender>
 	
-	<appender name="ORGANIZER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<appender name="ROOT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/spring-media-batch.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/spring-media-batch.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%level] [%thread] [%logger:%line] %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- <appender name="ORGANIZER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_PATH}/spring-media-organizer-batch.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${LOG_PATH}/spring-media-organizer-batch.%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -30,7 +42,7 @@
 			<charset>UTF-8</charset>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%level] [%thread] [%logger:%line] %msg%n</pattern>
 		</encoder>
-	</appender>
+	</appender> -->
 	
 	<logger name="org.springframework" 	level="INFO" additivity="true" />
 	<logger name="org.hibernate" 		level="INFO" additivity="true" />
@@ -40,17 +52,18 @@
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
-	<logger name="com.jpdacunha.media.batch.organizer.*" level="DEBUG" additivity="true">
+	<!-- <logger name="com.jpdacunha.media.batch.organizer.*" level="DEBUG" additivity="true">
 		<appender-ref ref="ORGANIZER_FILE" />
 	</logger>
 	
 	<logger name="com.jpdacunha.media.batch.removeduplicatesfotos.*" level="DEBUG" additivity="true">
 		<appender-ref ref="REMOVE_DUPLICATES_FOTOS_FILE" />
-	</logger>
+	</logger> -->
 
 	<root>
 		<appender-ref ref="STDOUT" />
-		<appender-ref ref="ORGANIZER_FILE" />
-		<appender-ref ref="REMOVE_DUPLICATES_FOTOS_FILE" />
+		<appender-ref ref="ROOT_FILE" />
+		<!-- <appender-ref ref="ORGANIZER_FILE" />
+		<appender-ref ref="REMOVE_DUPLICATES_FOTOS_FILE" /> -->
 	</root>
 </configuration>
