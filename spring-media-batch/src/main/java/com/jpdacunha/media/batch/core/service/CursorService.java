@@ -27,4 +27,6 @@ public interface CursorService {
 
 	public Cursor createCursor(String path);
 
+	public Cursor createOrUpdateCursor(File file);
+
 }

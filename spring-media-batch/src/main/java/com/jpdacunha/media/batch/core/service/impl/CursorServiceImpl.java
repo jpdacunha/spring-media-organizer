@@ -178,6 +178,15 @@ public class CursorServiceImpl implements CursorService {
 	}
 	
 	@Override
+	public Cursor createOrUpdateCursor(File file) {
+		
+		String absolutePath = file.getAbsolutePath();
+		
+		return createOrUpdateCursor(absolutePath);
+		
+	}
+	
+	@Override
 	public Cursor createOrUpdateCursor(String path) {
 		
 		if(log.isDebugEnabled()) {
@@ -188,10 +197,13 @@ public class CursorServiceImpl implements CursorService {
 		boolean cursorExists = cursorExists(path);
 		
 		if (cursorExists) {
+			log.info("Updating existing cursor identified by [" + path + "]");
 			cursor = updateLastExecutionDate(path);	
 		} else {
+			log.info("Create new cursor identified by [" + path + "]");
 			cursor = createCursor(path);
 		}
+		
 		return cursor;
 		
 	}
