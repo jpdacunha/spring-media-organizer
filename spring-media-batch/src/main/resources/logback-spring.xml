@@ -61,6 +61,7 @@
 	</logger> -->
 	
 	<root level="INFO" additivity="false">
+		<appender-ref ref="STDOUT" />
 		<appender-ref ref="ROOT_FILE" />
 	</root>
 </configuration>

@@ -47,6 +47,10 @@ spring:
     # Use http://localhost:8080/h2-console to access console
     console:
       enabled: true
+      path: /h2-console
+      settings:
+        trace: true
+        web-allow-others: true
 media-batch-organizer:
     paths:
         start-root-dirs: '/home/dev/spring-media-batch/source'
@@ -75,6 +79,10 @@ spring:
     # Use http://localhost:8080/h2-console to access console
     console:
       enabled: true
+      path: /h2-console
+      settings:
+        trace: true
+        web-allow-others: true
 media-batch-organizer:
     paths:
         start-root-dirs: '/volume1/photo/A_CLASSER,/volume1/photo/phone_JeanPaul,/volume1/photo/phone_arlette,/volume1/photo/phone_elena,/volume1/photo/tablette_lg'
