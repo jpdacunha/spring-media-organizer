@@ -5,4 +5,4 @@ COPY ./target/spring-media-batch.jar ./app.jar
 COPY ./config/application.yml ./
 ENV JAVA_OPTS=""
 EXPOSE 8080
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar --spring.config.location=/application.yml --spring.profiles.active=live" ]
+ENTRYPOINT [ "sh", "-c", "echo 127.0.0.1       jpdacunha-spring-media-batch >> /etc/hosts && exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar --spring.config.location=/application.yml --spring.profiles.active=live" ]

@@ -118,3 +118,22 @@ File classification is based on files's update date. In order to correctly setup
 ```shell
 $ cd <git_project_home>/spring-media-organizer/spring-media-batch/setup-tests-env.sh
 ```
+
+## H2 Database
+
+to access h2 console in docker context use following URL :
+
+```
+http://<HOSTNAME>:8080/h2-console/
+```
+Example :
+
+```
+http://athelas:8080/h2-console/
+```
+
+
+
+
+
+
