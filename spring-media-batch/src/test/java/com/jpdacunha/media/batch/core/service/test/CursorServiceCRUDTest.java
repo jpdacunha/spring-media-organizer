@@ -135,12 +135,17 @@ public class CursorServiceCRUDTest {
 		
 		Assert.assertTrue(exists == false);
 		
-		Cursor cursor = service.createOrUpdateCursor(testedPath);
+		Cursor createdCursor = service.createOrUpdateCursor(testedPath);
 		
-		exists = service.cursorExists(cursor.getPath());
+		Assert.assertTrue(createdCursor != null);
 		
-		Assert.assertTrue(exists == true);
-	
+		Assert.assertTrue(createdCursor.getLastExecutionDate() != null);
+		
+		Assert.assertTrue(createdCursor.getCreationDate() != null);
+		
+		Assert.assertTrue(createdCursor.getPath() != null);
+		
+		Assert.assertTrue(createdCursor.getId() != null);
 	}
 	
 	@Test

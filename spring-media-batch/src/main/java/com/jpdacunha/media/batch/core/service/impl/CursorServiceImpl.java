@@ -245,7 +245,7 @@ public class CursorServiceImpl implements CursorService {
 		
 			if (file.isDirectory()) {
 				
-				Cursor cursor = new Cursor(file.getAbsolutePath(), new Date());
+				Cursor cursor = new Cursor(file.getAbsolutePath(), cursorDate, cursorDate);
 				
 				repository.insert(cursor);
 				

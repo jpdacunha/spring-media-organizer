@@ -68,7 +68,7 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 			
 			log.info("###### Processing [" + startDir.getAbsolutePath() + "] directory...");
 			
-			//cleanCursors();
+			cleanCursors();
 			
 			displayAllCursors();
 			
