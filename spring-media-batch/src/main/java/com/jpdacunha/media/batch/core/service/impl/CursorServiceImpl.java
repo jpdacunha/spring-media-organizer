@@ -117,7 +117,7 @@ public class CursorServiceImpl implements CursorService {
 			log.info("No defined cursors found.");
 		} else {
 			
-			log.info("Found [" + cursors.size() + "] in database");
+			log.info("Found [" + cursors.size() + "] cursors in database");
 			
 			for (Cursor cursor : cursors) {
 				
@@ -129,7 +129,7 @@ public class CursorServiceImpl implements CursorService {
 					int rows = repository.remove(cursor.getId());
 					
 					if (rows == 1) {
-						log.info("Cursor identified by [" + path + "] sucessfully removed from database");
+						log.info("Cursor identified by [" + path + "] successfully removed from database");
 					}
 					
 				} else {

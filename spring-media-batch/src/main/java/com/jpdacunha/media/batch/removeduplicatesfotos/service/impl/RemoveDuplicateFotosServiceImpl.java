@@ -225,18 +225,28 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 			}
 			
 			log.info("## Start to physically remove identified duplicates ...");
-			//Removing registered files
-			for (DuplicatePhotosModel duplicatePhotosModel : toRemove) {
+			
+			
+			if (toRemove.size() == 0) {
 				
-				String toRemoveFilePath = duplicatePhotosModel.getDuplicateFile().getAbsolutePath();
-				String filePath = duplicatePhotosModel.getFile().getAbsolutePath();
+				log.info("  :> No duplicates found");
 				
-				log.info("  :> Removing : [" + toRemoveFilePath + "] as duplicate as [" + filePath + "]");
-				if (!dryRun) {					
-					File toRemoveFile = new File(toRemoveFilePath);
-					FileSystemUtils.removeIfExists(toRemoveFile);
+			} else {
+			
+				//Removing registered files
+				for (DuplicatePhotosModel duplicatePhotosModel : toRemove) {
+					
+					String toRemoveFilePath = duplicatePhotosModel.getDuplicateFile().getAbsolutePath();
+					String filePath = duplicatePhotosModel.getFile().getAbsolutePath();
+					
+					log.info("  :> Removing : [" + toRemoveFilePath + "] as duplicate as [" + filePath + "]");
+					if (!dryRun) {					
+						File toRemoveFile = new File(toRemoveFilePath);
+						FileSystemUtils.removeIfExists(toRemoveFile);
+					}
+					log.info("  :> File removed successfully");
+					
 				}
-				log.info("  :> File removed successfully");
 				
 			}
 			log.info("## Done.");
