@@ -48,7 +48,7 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 	// Pick an algorithm
 	private HashingAlgorithm hasher = new AverageHash(keyLength);
 
-	@Scheduled(cron = "0 0 2 * * *")
+	@Scheduled(cron = "0 0 3 * * *")
 	public void removeDuplicateFotos() throws RemoveDuplicateImagesException {
 		
 		Instant start = Instant.now();
@@ -59,6 +59,8 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 		log.info("#######################################################################################");
 		log.info("# Starting remove duplicates FOTOS //////> ...");
 		log.info("#######################################################################################");
+		
+		log.info("## Applied configuration : [" + configuration + "]");
 		
 		String[] startPaths = configuration.getPaths().getStartRootDirs();
 		
@@ -128,8 +130,6 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 		if (!toAnalyzeDir.isDirectory()) {
 			throw new RemoveDuplicateImagesException(toAnalyzeDir.getAbsolutePath() + " is not a valid source directory");
 		}
-		
-		log.info("## Applied configuration : [" + configuration + "]");
 		
 		if (toAnalyzeDir.exists()) {
 			

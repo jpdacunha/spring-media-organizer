@@ -37,6 +37,8 @@ public class MediaServiceImpl implements MediaService {
 		log.info("# Starting classify FOTOS //////> ...");
 		log.info("#######################################################################################");
 		
+		log.info("## Applied configuration : [" + configuration + "]");
+		
 		String[] startPaths = configuration.getPaths().getStartRootDirs();
 		String destPath = configuration.getPaths().getDestinationRootDirPhoto();
 		IOFileFilter fileFilter = new ImageFileFilter();
@@ -67,6 +69,8 @@ public class MediaServiceImpl implements MediaService {
 		log.info("# Starting classify VIDEOS //////> ...");
 		log.info("#######################################################################################");
 		
+		log.info("## Applied configuration : [" + configuration + "]");
+		
 		String[] startPaths = configuration.getPaths().getStartRootDirs();
 		String destPath = configuration.getPaths().getDestinationRootDirVideo();
 		IOFileFilter fileFilter = new VideoFileFilter();
@@ -93,7 +97,6 @@ public class MediaServiceImpl implements MediaService {
 	public void classifyByYear(File startDir, File destDir, FileFilter fileFilter, boolean dryRun) throws MediaBatchException {
 		
 		log.info("##### Starting classifyByYear ...");
-		log.info("## Applied configuration : [" + configuration + "]");
 		
 		if (startDir == null || destDir == null) {
 			throw new MediaBatchException("Missing required parameter");
