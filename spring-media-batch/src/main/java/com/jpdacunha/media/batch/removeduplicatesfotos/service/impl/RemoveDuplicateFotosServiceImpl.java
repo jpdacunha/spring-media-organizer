@@ -2,7 +2,6 @@ package com.jpdacunha.media.batch.removeduplicatesfotos.service.impl;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -140,35 +139,45 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 
 			List<File> searchedList = (List<File>) FileUtils.listFilesAndDirs(toAnalyzeDir, (IOFileFilter)fileFilter, TrueFileFilter.INSTANCE);
 			
-			if (searchedList.size() == 0) {
+			int total = searchedList.size();
+			
+			if (total == 0) {
 				log.info("No files in specified directories.");
 			} else {
-				log.info("Found [" + searchedList.size() + "] files in [" + toAnalyzeDir.getAbsolutePath() + "]");
+				log.info("Found [" + total + "] files in [" + toAnalyzeDir.getAbsolutePath() + "]");
 			}
 			
-			//Searching for images to remove
-			for (final Iterator<File> searchedListIterator = searchedList.listIterator(); searchedListIterator.hasNext();) {
+			try {
 				
-				File file = searchedListIterator.next();
+				int i = 1;
+				Instant start = Instant.now();
 				
-				if (!FileSystemUtils.isValidFile(file)) {
-					continue;
-				}
-				
-				log.debug("## Start to remove duplicates images for [" + file.getName() + "] ...");
-				
-				List<File> toCompareList = (List<File>) FileUtils.listFilesAndDirs(toAnalyzeDir, (IOFileFilter)fileFilter, TrueFileFilter.INSTANCE);
-						
-				//Using an iterator in order to remove the file instance during iteration
-				for (final Iterator<File> toCompareListIterator = toCompareList.listIterator(); toCompareListIterator.hasNext();) {
+				//Searching for images to remove
+				for (final Iterator<File> searchedListIterator = searchedList.listIterator(); searchedListIterator.hasNext();) {
 					
-					File toCompareFile = toCompareListIterator.next();
+			    	if (i == 1 || (i % 100) == 0) {
+	            		String message = String.format("Processing : %d of %d", i, total);
+	            		log.info(message);
+	            	}
 					
-					if (!FileSystemUtils.isValidFile(toCompareFile)) {
+					File file = searchedListIterator.next();
+					
+					if (!FileSystemUtils.isValidFile(file)) {
 						continue;
 					}
 					
-					try {
+					log.debug("## Start to remove duplicates images for [" + file.getName() + "] ...");
+					
+					List<File> toCompareList = (List<File>) FileUtils.listFilesAndDirs(toAnalyzeDir, (IOFileFilter)fileFilter, TrueFileFilter.INSTANCE);
+							
+					//Using an iterator in order to remove the file instance during iteration
+					for (final Iterator<File> toCompareListIterator = toCompareList.listIterator(); toCompareListIterator.hasNext();) {
+						
+						File toCompareFile = toCompareListIterator.next();
+						
+						if (!FileSystemUtils.isValidFile(toCompareFile)) {
+							continue;
+						}
 						
 						String toCompareAbsolutePath = toCompareFile.getAbsolutePath();						
 						String fileAbsolutePath = file.getAbsolutePath();
@@ -213,15 +222,23 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 							log.debug("  :> Skipping comparision : currentFile and toCompareFile are the same file");
 						}
 						
-					} catch (IOException e) {
-						log.error(e.getMessage() ,e);
-						throw new RemoveDuplicateImagesException(e);
 					}
+					
+					log.debug("## Done for [" + file.getName() + "].");
+					
+					Instant end = Instant.now();
+					String exectime = new HumanReadableDurationModel(start, end).toHumanReadable();
+					
+					String message = String.format("Elapsed time : %s", exectime);
+            		log.info(message);
+					
+					i++;
 					
 				}
 				
-				log.debug("## Done for [" + file.getName() + "].");
-				
+			} catch (Exception e) {
+				log.error(e.getMessage() ,e);
+				throw new RemoveDuplicateImagesException(e);
 			}
 			
 			log.info("## Start to physically remove identified duplicates ...");
