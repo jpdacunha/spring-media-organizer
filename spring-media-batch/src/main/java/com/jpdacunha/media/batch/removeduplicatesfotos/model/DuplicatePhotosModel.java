@@ -7,6 +7,11 @@ public class DuplicatePhotosModel {
 	private File file;
 	private File duplicateFile;
 	
+	public DuplicatePhotosModel(File duplicateFile) {
+		super();
+		this.duplicateFile = duplicateFile;
+	}
+	
 	public DuplicatePhotosModel(File file, File duplicateFile) {
 		super();
 		this.file = file;

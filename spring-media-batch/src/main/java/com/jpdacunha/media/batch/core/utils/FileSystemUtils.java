@@ -32,7 +32,26 @@ public class FileSystemUtils {
 		super();
 	}
 	
-	public static boolean imagesAreExactlyTheSame(HashingAlgorithm hasher, File fileA, File fileB) throws IOException {
+	public static long getSizeIfExists(File file) {
+		
+		if (file != null) {
+
+			if (FileSystemUtils.isFileExists(file)) {
+				return FileUtils.sizeOf(file);
+			} else {
+				log.warn("File identified by [" + file.getAbsolutePath() + "] does not exists.");
+			}
+			
+		} else {
+			log.warn("File is null");
+		}
+		
+		return 0;
+		
+		
+	}
+	
+	public static boolean imagesAreExactlyTheSame(HashingAlgorithm hasher, File fileA, File fileB) {
 		
 		if (fileA == null || !fileA.exists()) {
 			log.debug("fileA is null or does not exists");
@@ -70,6 +89,20 @@ public class FileSystemUtils {
 				
 				BufferedImage imageB = ImageIO.read(streamB);
 				
+				if (imageA == null) {
+					
+					log.debug("Unable to read fileA:[" + fileA.getAbsolutePath() + "]");
+					return false;
+					
+				}
+				
+				if (imageB == null) {
+					
+					log.debug("Unable to read fileB:[" + fileB.getAbsolutePath() + "]");
+					return false;
+					
+				}
+				
 				//Generate the hash for each image
 				Hash hash1 = hasher.hash(imageA);
 				Hash hash2 = hasher.hash(imageB);
@@ -82,12 +115,12 @@ public class FileSystemUtils {
 		
 				return similarityScore == 0.0d;
 				
-			} catch (javax.imageio.IIOException e) {
+			} catch (Exception e) {
 				log.warn("Problem reading content of [" + fileB.getAbsolutePath() + "] : " + e.getMessage());
 				return false;
 			}
 			
-		} catch (javax.imageio.IIOException e) {
+		} catch (Exception e) {
 			log.warn("Problem reading content of [" + fileA.getAbsolutePath() + "] : " + e.getMessage());
 			return false;
 		}
@@ -286,13 +319,15 @@ public class FileSystemUtils {
 		
 	}
 	
-	public static void removeIfExists(File toRemoveFile) {
+	public static boolean removeIfExists(File toRemoveFile) {
 		
 		if (FileSystemUtils.isFileExists(toRemoveFile)) {
-			toRemoveFile.delete();
+			return toRemoveFile.delete();
 		} else {
 			log.debug("toRemoveFile does not exists");
 		}
+		
+		return false;
 		
 	}
 	

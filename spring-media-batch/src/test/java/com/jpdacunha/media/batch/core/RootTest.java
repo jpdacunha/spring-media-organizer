@@ -87,7 +87,13 @@ public abstract class RootTest {
 			String nameofCurrMethod
 		) {
 		
-		return removeImageDuplicates(configuration, service, nameofCurrMethod, false);
+		try {
+			return removeImageDuplicates(configuration, service, nameofCurrMethod, false);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		
+		return false;
 	
 	}
 	
