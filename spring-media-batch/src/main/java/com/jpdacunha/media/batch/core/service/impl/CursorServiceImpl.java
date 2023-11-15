@@ -188,6 +188,15 @@ public class CursorServiceImpl implements CursorService {
 	}
 	
 	@Override
+	public Cursor createOrUpdateCursor(File file, Duration duration) {
+		
+		String absolutePath = file.getAbsolutePath();
+		
+		return createOrUpdateCursor(absolutePath, duration);
+		
+	}
+	
+	@Override
 	public Cursor createOrUpdateCursor(String path) {
 		return createOrUpdateCursor(path, null);
 	}

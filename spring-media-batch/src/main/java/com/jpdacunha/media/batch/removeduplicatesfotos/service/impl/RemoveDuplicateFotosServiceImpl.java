@@ -2,6 +2,7 @@ package com.jpdacunha.media.batch.removeduplicatesfotos.service.impl;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -19,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import com.jpdacunha.media.batch.core.database.model.Cursor;
 import com.jpdacunha.media.batch.core.model.HumanReadableDurationModel;
-import com.jpdacunha.media.batch.core.model.HumanReadableFileSizeModel;
 import com.jpdacunha.media.batch.core.service.CursorService;
 import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
 import com.jpdacunha.media.batch.removeduplicatesfotos.configuration.RemoveDuplicatesFotosYamlConfiguration;
@@ -54,8 +54,7 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 		
 		Instant start = Instant.now();
 		
-		//TODO:JDA Remove dryRun option here
-		boolean dryRun = true;
+		boolean dryRun = false;
 		
 		log.info("#######################################################################################");
 		log.info("# Starting remove duplicates FOTOS //////> ...");
@@ -66,6 +65,8 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 		String[] startPaths = configuration.getPaths().getStartRootDirs();
 		
 		for (String startPath : startPaths) {
+			
+			Instant pathStart = Instant.now();
 			
 			File startDir = new File(startPath);
 			
@@ -79,7 +80,11 @@ public class RemoveDuplicateFotosServiceImpl implements RemoveDuplicateImagesSer
 			
 			removeDuplicates(workDir, dryRun);
 			
-			cursorService.createOrUpdateCursor(workDir);
+			Instant pathEnd = Instant.now();
+			
+			Duration duration = Duration.between(pathStart, pathEnd);
+			
+			cursorService.createOrUpdateCursor(workDir, duration);
 			
 			log.info("###### Done.");
 			

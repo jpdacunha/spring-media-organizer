@@ -33,5 +33,7 @@ public interface CursorService {
 	public Cursor createCursor(String path, long executionTimesInSeconds);
 	
 	public Cursor createOrUpdateCursor(File file);
+	
+	public Cursor createOrUpdateCursor(File file, Duration duration);
 
 }
