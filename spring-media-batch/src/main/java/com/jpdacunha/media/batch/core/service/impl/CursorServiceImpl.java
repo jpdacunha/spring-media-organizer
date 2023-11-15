@@ -2,6 +2,7 @@ package com.jpdacunha.media.batch.core.service.impl;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.time.Duration;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -188,6 +189,11 @@ public class CursorServiceImpl implements CursorService {
 	
 	@Override
 	public Cursor createOrUpdateCursor(String path) {
+		return createOrUpdateCursor(path, null);
+	}
+	
+	@Override
+	public Cursor createOrUpdateCursor(String path, Duration duration) {
 		
 		if(log.isDebugEnabled()) {
 			log.debug(" Create or update cursor for [" + path + "]");
@@ -196,20 +202,27 @@ public class CursorServiceImpl implements CursorService {
 		Cursor cursor = null;
 		boolean cursorExists = cursorExists(path);
 		
+		long executionTimesInSeconds = 0;
+		if (duration != null) {
+			executionTimesInSeconds = duration.getSeconds();
+		} else {
+			log.debug("Invalid duration null : keeping default value");
+		}
+
 		if (cursorExists) {
 			log.info("Updating existing cursor identified by [" + path + "]");
-			cursor = updateLastExecutionDate(path);	
+			cursor = updateByPath(path, executionTimesInSeconds);	
 		} else {
 			log.info("Create new cursor identified by [" + path + "]");
-			cursor = createCursor(path);
+			cursor = createCursor(path, executionTimesInSeconds);
 		}
-		
+
 		return cursor;
 		
 	}
-	
+
 	@Override
-	public Cursor updateLastExecutionDate(String path) {
+	public Cursor updateByPath(String path, long executionTimesInSeconds) {
 		
 		Cursor cursor = null;
 		if (path == null) {
@@ -218,7 +231,7 @@ public class CursorServiceImpl implements CursorService {
 			
 		} else {
 			
-			repository.updateLastExecutionDate(path);
+			repository.updateByPath(path, executionTimesInSeconds);
 			cursor = findByPath(path);
 			
 		}
@@ -227,7 +240,7 @@ public class CursorServiceImpl implements CursorService {
 		
 	}
 	
-	private  Cursor createCursor(String path, Date cursorDate) {
+	private  Cursor createCursor(String path, Date cursorDate, long executionTimesInSeconds) {
 		
 		if (path == null || (path != null && path.equals(""))) {
 			
@@ -245,7 +258,7 @@ public class CursorServiceImpl implements CursorService {
 		
 			if (file.isDirectory()) {
 				
-				Cursor cursor = new Cursor(file.getAbsolutePath(), cursorDate, cursorDate);
+				Cursor cursor = new Cursor(file.getAbsolutePath(), cursorDate, cursorDate, executionTimesInSeconds);
 				
 				repository.insert(cursor);
 				
@@ -258,16 +271,18 @@ public class CursorServiceImpl implements CursorService {
 		} else {
 			throw new CursorException("[" + file.getAbsolutePath() + "] does not exists.");
 		}
-			
-		
 		
 	}
 	
 	@Override
+	public  Cursor createCursor(String path, long executionTimesInSeconds) {
+		return createCursor(path, new Date(), executionTimesInSeconds);	
+	}
+	
+	@Override
 	public  Cursor createCursor(String path) {
-		
-		return createCursor(path, new Date());
-		
+		long executionTimesInSeconds = 0;
+		return createCursor(path, new Date(), executionTimesInSeconds);	
 	}
 
 	@Override

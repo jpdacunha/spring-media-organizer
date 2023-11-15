@@ -18,6 +18,8 @@ spring:
     driverClassName: org.h2.Driver
     sql-script-encoding: UTF-8
     initialization-mode: always
+  liquibase:  
+    enabled: false
 media-batch-organizer:
     paths:
         # Comma separated list where batch will lookup for files to classify
@@ -42,7 +44,8 @@ spring:
     password: 
     driverClassName: org.h2.Driver
     sql-script-encoding: UTF-8
-    initialization-mode: always
+  liquibase:  
+    change-log: classpath:db/changelog/master.xml    
   h2:
     # Use http://localhost:8080/h2-console to access console
     console:
@@ -74,7 +77,8 @@ spring:
     password: 
     driverClassName: org.h2.Driver
     sql-script-encoding: UTF-8
-    initialization-mode: always
+  liquibase:  
+    change-log: classpath:db/changelog/master.xml    
   h2:
     # Use http://localhost:8080/h2-console to access console
     console:

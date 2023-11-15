@@ -2,6 +2,8 @@ package com.jpdacunha.media.batch.core.service.test;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 
 import org.apache.commons.lang3.time.DateUtils;
@@ -146,6 +148,57 @@ public class CursorServiceCRUDTest {
 		Assert.assertTrue(createdCursor.getPath() != null);
 		
 		Assert.assertTrue(createdCursor.getId() != null);
+		
+		Assert.assertTrue(createdCursor.getExecutionTime().equals("0"));
+	}
+	
+	@Test
+	public void createOrUpdate_nominal_create_with_duration() {
+		
+		String testedPath = ROOT_PATH + "createOrUpdate_nominal_create_with_duration/test";
+		
+		boolean exists = service.cursorExists(testedPath);
+		
+		Assert.assertTrue(exists == false);
+		
+		Instant start = Instant.parse("2017-10-03T10:15:30.00Z");
+		Instant end   = Instant.parse("2017-10-03T10:16:40.00Z");
+		        
+		Duration duration = Duration.between(start, end);
+		
+		Cursor createdCursor = service.createOrUpdateCursor(testedPath, duration);
+		
+		Assert.assertTrue(createdCursor != null);
+		
+		Assert.assertTrue(createdCursor.getLastExecutionDate() != null);
+		
+		Assert.assertTrue(createdCursor.getCreationDate() != null);
+		
+		Assert.assertTrue(createdCursor.getPath() != null);
+		
+		Assert.assertTrue(createdCursor.getId() != null);
+		
+		Assert.assertTrue(createdCursor.getExecutionTime().equals("70"));
+	}
+	
+	@Test
+	public void createOrUpdate_execution_time() {
+		
+		String testedPath = ROOT_PATH + "createOrUpdate_execution_time/test";
+		
+		boolean exists = service.cursorExists(testedPath);
+		
+		Assert.assertTrue(exists == false);
+		
+		Instant start = Instant.parse("2017-10-03T10:15:30.00Z");
+		Instant end   = Instant.parse("2017-10-03T10:16:30.00Z");
+		        
+		Duration duration = Duration.between(start, end);
+		
+		Cursor createdCursor = service.createOrUpdateCursor(testedPath, duration);
+		
+		Assert.assertTrue(createdCursor.getExecutionTime().equals("60"));
+		
 	}
 	
 	@Test
@@ -157,7 +210,7 @@ public class CursorServiceCRUDTest {
 		
 		String absolutePath = testedFile.getAbsolutePath();
 		
-		Cursor cursor = service.createCursor(absolutePath);
+		Cursor cursor = service.createCursor(absolutePath, 0);
 		
 		boolean exists = service.cursorExists(absolutePath);
 		

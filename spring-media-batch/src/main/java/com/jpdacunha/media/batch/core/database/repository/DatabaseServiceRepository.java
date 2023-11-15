@@ -18,14 +18,15 @@ public class DatabaseServiceRepository {
 	
 	private static Logger log = LoggerFactory.getLogger(DatabaseServiceRepository.class);
 	
-	private static final String UPDATE_FROM_BATCH_CURSOR_WHERE_ID = "UPDATE BATCH_CURSOR SET LAST_EXECUTION_DATE = ? WHERE PATH = ?";
+	private static final String UPDATE_BATCH_CURSOR_LAST_EXEC_DATE_WHERE_PATH = "UPDATE BATCH_CURSOR SET LAST_EXECUTION_DATE = ?, EXECUTION_TIME_SECONDS = ? WHERE PATH = ?";
+	
 	private static final String DELETE_FROM_BATCH_CURSOR_WHERE_ID = "DELETE FROM BATCH_CURSOR WHERE ID = ?";
 	private static final String SELECT_FROM_BATCH_CURSOR_WHERE_PATH = "SELECT * FROM BATCH_CURSOR WHERE PATH = ?";
+	
 	private static final String SELECT_OLDER_CURSOR_FROM_BATCH_CURSOR = "SELECT * FROM BATCH_CURSOR ORDER BY LAST_EXECUTION_DATE LIMIT 1;";
 	private static final String SELECT_FROM_BATCH_CURSOR = "SELECT * FROM BATCH_CURSOR";
-	private static final String INSERT_INTO_BATCH_CURSOR = "INSERT INTO BATCH_CURSOR (ID, PATH, CREATION_DATE, LAST_EXECUTION_DATE) VALUES (?, ?, ?, ?)";
+	private static final String INSERT_INTO_BATCH_CURSOR = "INSERT INTO BATCH_CURSOR (ID, PATH, CREATION_DATE, LAST_EXECUTION_DATE, EXECUTION_TIME_SECONDS) VALUES (?, ?, ?, ?, ?)";
 	private static final String TRUNCATE_TABLE_BATCH_CURSOR = "TRUNCATE TABLE BATCH_CURSOR";
-
 	
 	@Autowired
     private JdbcTemplateExtended jdbcTemplate;
@@ -34,6 +35,9 @@ public class DatabaseServiceRepository {
 
         String sql = SELECT_FROM_BATCH_CURSOR;
 
+    	/*
+    	 * IMPORTANT : Don't forger to update CursorRowMapper in case of DDL schema modification
+    	 */
         return jdbcTemplate.query(sql, new CursorRowMapper());
 
     }
@@ -42,6 +46,9 @@ public class DatabaseServiceRepository {
 
         String sql = SELECT_OLDER_CURSOR_FROM_BATCH_CURSOR;
 
+    	/*
+    	 * IMPORTANT : Don't forger to update CursorRowMapper in case of DDL schema modification
+    	 */
         return jdbcTemplate.queryForNullableObject(sql, new CursorRowMapper());
 
     }
@@ -50,6 +57,9 @@ public class DatabaseServiceRepository {
 
         String sql = SELECT_FROM_BATCH_CURSOR_WHERE_PATH;
 
+    	/*
+    	 * IMPORTANT : Don't forger to update CursorRowMapper in case of DDL schema modification
+    	 */
         return jdbcTemplate.queryForNullableObject(sql, new Object[]{absolutePath}, new CursorRowMapper());
 
     }
@@ -73,11 +83,11 @@ public class DatabaseServiceRepository {
 	}
 	
 	@Transactional 
-	public int updateLastExecutionDate(String path) {
+	public int updateByPath(String path, long seconds) {
 		
-		String update = UPDATE_FROM_BATCH_CURSOR_WHERE_ID;
+		String update = UPDATE_BATCH_CURSOR_LAST_EXEC_DATE_WHERE_PATH;
 		
-		int nbRows = jdbcTemplate.update(update, new Date(), path);
+		int nbRows = jdbcTemplate.update(update, new Date(), seconds, path);
 
 		return nbRows;
 		
@@ -85,14 +95,14 @@ public class DatabaseServiceRepository {
 	
 	@Transactional 
 	public int insert(Cursor cursor) {
-		
+			
 		String insert = INSERT_INTO_BATCH_CURSOR;
 		
 		int nbRows = 0;
 		
 		if (cursor != null) {
 			
-			nbRows = jdbcTemplate.update(insert, cursor.getId(), cursor.getPath(), cursor.getCreationDate(), cursor.getLastExecutionDate());
+			nbRows = jdbcTemplate.update(insert, cursor.getId(), cursor.getPath(), cursor.getCreationDate(), cursor.getLastExecutionDate(), cursor.getExecutionTime());
 			
 		} else {
 			log.error("Cannot insert null object");

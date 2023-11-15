@@ -6,5 +6,6 @@ public interface BatchCursorTable {
 	public final static String PATH = "PATH";
 	public final static String CREATION_DATE = "CREATION_DATE";
 	public final static String LAST_EXECUTION_DATE = "LAST_EXECUTION_DATE";
+	public final static String EXECUTION_TIME_SECONDS = "EXECUTION_TIME_SECONDS";
 
 }

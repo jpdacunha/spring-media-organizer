@@ -34,7 +34,7 @@ public class HumanReadableDurationModel {
 	    return String.join(", ", parts);
 	    
 	}
-
+	
 	private String plural(long num, String unit) {
 	    return num + " " + unit + (num == 1 ? "" : "s");
 	}
