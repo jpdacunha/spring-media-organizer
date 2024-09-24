@@ -17,6 +17,22 @@ import lombok.ToString;
 public class MediaBatchYamlConfiguration {
 	
 	public Paths paths;
+	private FileNamePatterns fileNamePatterns; 
+	
+	@Data
+	public static class FileNamePatterns {
+		
+		private String[] photoPatterns;
+
+		public String[] getPhotoPatterns() {
+			return photoPatterns;
+		}
+
+		public void setPhotoPatterns(String[] photoPatterns) {
+			this.photoPatterns = photoPatterns;
+		}
+
+	}
 
 	@Data
 	public static class Paths {
@@ -52,6 +68,14 @@ public class MediaBatchYamlConfiguration {
 	
 	public void setPaths(Paths paths) {
 		this.paths = paths;
+	}
+
+	public FileNamePatterns getFileNamePatterns() {
+		return fileNamePatterns;
+	}
+
+	public void setFileNamePatterns(FileNamePatterns fileNamePatterns) {
+		this.fileNamePatterns = fileNamePatterns;
 	}
 
 }

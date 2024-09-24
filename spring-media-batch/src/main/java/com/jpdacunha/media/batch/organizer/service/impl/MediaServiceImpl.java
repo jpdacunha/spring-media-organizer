@@ -129,8 +129,9 @@ public class MediaServiceImpl implements MediaService {
 			for (File file : searched) {
 				
 				for (ClassificationStrategy strategies : classificationStrategyList) {
-					
+					log.info(" ");
 					log.info("############################> " + strategies.getClassificationPath());
+					log.info(" ");
 					
 				}
 				
