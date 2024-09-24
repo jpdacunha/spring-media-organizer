@@ -3,12 +3,14 @@ package com.jpdacunha.media.batch.organizer.service.impl;
 import java.io.File;
 import java.io.FileFilter;
 import java.time.Instant;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;
 import com.jpdacunha.media.batch.organizer.model.MediaDescriptor;
+import com.jpdacunha.media.batch.organizer.model.strategy.ClassificationStrategy;
 import com.jpdacunha.media.batch.organizer.service.MediaService;
 
 @Service
@@ -28,6 +31,10 @@ public class MediaServiceImpl implements MediaService {
 
 	@Autowired
 	private MediaBatchYamlConfiguration configuration;
+	
+	@Autowired(required = true)
+	@Qualifier("ClassificationStrategyList")
+	private List<ClassificationStrategy> classificationStrategyList;
 
 	@Scheduled(cron = "0 0 1 * * *")
 	public void classifyPhotos() throws MediaBatchException {
@@ -120,6 +127,12 @@ public class MediaServiceImpl implements MediaService {
 			}
 			
 			for (File file : searched) {
+				
+				for (ClassificationStrategy strategies : classificationStrategyList) {
+					
+					log.info("############################> " + strategies.getClassificationPath());
+					
+				}
 				
 				MediaDescriptor mediaDescriptor = new MediaDescriptor(file, Locale.FRANCE);
 				
