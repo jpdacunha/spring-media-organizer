@@ -27,7 +27,8 @@ media-batch-organizer:
         destination-root-dir-photo: 'src/test/resources/spring-media-batch'
         destination-root-dir-video: 'src/test/resources/spring-media-batch'
     file-name-patterns:
-        photo-patterns: 'IMG-yyyymmdd-WA.jpg,yyyymmdd_hhmmss.jpg,IMGyyyymmddhhmmss.jpg'
+        photo-file-name-patterns: '^(IMG-)(\\d{8})(-WA.jpg)$,^(\\d{8})(_)(\\d{6})(.jpg)$,^(IMG)(\\d{14})(.jpg)$'
+        photo-date-patterns: 'yyyymmdd,yyyymmdd_hhmmss,yyyymmddhhmmss'
 media-batch-remove-duplicates-fotos:
     paths:
         # Comma separated list where batch will lookup for duplicates
@@ -62,7 +63,8 @@ media-batch-organizer:
         destination-root-dir-photo: '/home/dev/spring-media-batch/destination-photo'
         destination-root-dir-video: '/home/dev/spring-media-batch/destination-video' 
     file-name-patterns:
-        photo-patterns: 'IMG-yyyymmdd-WA.jpg,yyyymmdd_hhmmss.jpg,IMGyyyymmddhhmmss.jpg'
+        photo-file-name-patterns: '^(IMG-)(\\d{8})(-WA.jpg)$,^(\\d{8})(_)(\\d{6})(.jpg)$,^(IMG)(\\d{14})(.jpg)$'
+        photo-date-patterns: 'yyyymmdd,yyyymmdd_hhmmss,yyyymmddhhmmss'
 media-batch-remove-duplicates-fotos:
     paths:
         # Comma separated list where batch will lookup for duplicates
@@ -97,7 +99,8 @@ media-batch-organizer:
         destination-root-dir-photo: '/volume1/photo'
         destination-root-dir-video: '/volume1/video/Famille'
     file-name-patterns:
-        photo-patterns: 'IMG-yyyymmdd-WA.jpg,yyyymmdd_hhmmss.jpg,IMGyyyymmddhhmmss.jpg'
+        photo-file-name-patterns: '^(IMG-)(\\d{8})(-WA.jpg)$,^(\\d{8})(_)(\\d{6})(.jpg)$,^(IMG)(\\d{14})(.jpg)$'
+        photo-date-patterns: 'yyyymmdd,yyyymmdd_hhmmss,yyyymmddhhmmss'
 media-batch-remove-duplicates-fotos:
     paths:
         # Comma separated list where batch will lookup for duplicates

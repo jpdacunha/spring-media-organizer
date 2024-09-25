@@ -16,7 +16,8 @@ public class LastModififiedClassificationStrategy implements ClassificationStrat
 
 	@Override
 	public String getClassificationPath() throws UnrelevantClassificationStrategyException {
-		return "LastModififiedClassificationStrategy >>> " + Arrays.toString(configuration.getFileNamePatterns().getPhotoPatterns());
+		return "LastModififiedClassificationStrategy >>> " + Arrays.toString(configuration.getFileNamePatterns().getPhotoFileNamePatterns()) + " " + Arrays.toString(configuration.getFileNamePatterns().getPhotoDatePatterns());
 	}
+
 
 }

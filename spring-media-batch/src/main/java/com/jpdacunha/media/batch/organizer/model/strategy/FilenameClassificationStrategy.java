@@ -16,7 +16,7 @@ public class FilenameClassificationStrategy implements ClassificationStrategy {
 
 	@Override
 	public String getClassificationPath() throws UnrelevantClassificationStrategyException {
-		return "FilenameClassificationStrategy >>> " + Arrays.toString(configuration.getFileNamePatterns().getPhotoPatterns());
+		return "FilenameClassificationStrategy >>> " + Arrays.toString(configuration.getFileNamePatterns().getPhotoFileNamePatterns()) + " " + Arrays.toString(configuration.getFileNamePatterns().getPhotoDatePatterns());
 	}
 
 }

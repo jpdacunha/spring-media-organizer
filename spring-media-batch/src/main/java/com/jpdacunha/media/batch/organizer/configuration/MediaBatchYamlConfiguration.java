@@ -22,14 +22,20 @@ public class MediaBatchYamlConfiguration {
 	@Data
 	public static class FileNamePatterns {
 		
-		private String[] photoPatterns;
-
-		public String[] getPhotoPatterns() {
-			return photoPatterns;
+		private String[] photoFileNamePatterns;
+		private String[] photoDatePatterns;
+		
+		public String[] getPhotoFileNamePatterns() {
+			return photoFileNamePatterns;
 		}
-
-		public void setPhotoPatterns(String[] photoPatterns) {
-			this.photoPatterns = photoPatterns;
+		public void setPhotoFileNamePatterns(String[] photoFileNamePatterns) {
+			this.photoFileNamePatterns = photoFileNamePatterns;
+		}
+		public String[] getPhotoDatePatterns() {
+			return photoDatePatterns;
+		}
+		public void setPhotoDatePatterns(String[] photoDatePatterns) {
+			this.photoDatePatterns = photoDatePatterns;
 		}
 
 	}
