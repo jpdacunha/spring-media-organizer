@@ -2,6 +2,7 @@ package com.jpdacunha.media.batch.organizer.service.impl;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
@@ -128,13 +129,6 @@ public class MediaServiceImpl implements MediaService {
 			
 			for (File file : searched) {
 				
-				for (ClassificationStrategy strategies : classificationStrategyList) {
-					log.info(" ");
-					log.info("############################> " + strategies.getClassificationPath());
-					log.info(" ");
-					
-				}
-				
 				MediaDescriptor mediaDescriptor = new MediaDescriptor(file, Locale.FRANCE);
 				
 				//Les dates de modification ne sont pas conservées en cas de copie de fichier
@@ -142,15 +136,23 @@ public class MediaServiceImpl implements MediaService {
 				log.info("## Starting classification for [" + file.getName() + "] ...");
 				log.debug("  :> File details : " + mediaDescriptor);
 				
-				String yearMonthPath = destDir.getAbsolutePath() + File.separator + mediaDescriptor.getYearMonthDirName();
-				File yearMonthDir = FileSystemUtils.createDirIfNotExists(yearMonthPath);
+				//String yearMonthPath = destDir.getAbsolutePath() + File.separator + mediaDescriptor.getYearMonthDirName();
 				
-				log.debug("  :> Moving : [" + file.getAbsolutePath() + "] to [" + yearMonthDir.getAbsolutePath() + "]");
-				if (!dryRun) {
-					FileSystemUtils.moveFileToDirectory(file, yearMonthDir, true);
+				Path yearMonthPath = getRelevantClassificationPath(file, destDir);
+				
+				if (yearMonthPath != null) {
+					
+					File yearMonthDir = FileSystemUtils.createDirIfNotExists(yearMonthPath.toString());
+					
+					log.debug("  :> Moving : [" + file.getAbsolutePath() + "] to [" + yearMonthDir.getAbsolutePath() + "]");
+					if (!dryRun) {
+						FileSystemUtils.moveFileToDirectory(file, yearMonthDir, true);
+					}
+					log.debug("  :> File moved successfully");
+					
+				} else {
+					throw new MediaBatchException("Undefined classification path for [" + mediaDescriptor + "]");
 				}
-				log.debug("  :> File moved successfully");
-				
 				log.info("## Done for [" + file.getName() + "].");
 			}
 			
@@ -159,6 +161,25 @@ public class MediaServiceImpl implements MediaService {
 		}
 		
 		log.info("##### End.");
+		
+	}
+	
+	public Path getRelevantClassificationPath(File toClassify, File destDir) {
+
+		for (ClassificationStrategy strategies : classificationStrategyList) {
+			
+			Path classificationPath = strategies.getClassificationPath(toClassify, destDir);
+			
+			if (classificationPath != null) {
+				log.info("Aplying strategy : " + strategies.getClass().getName());
+				return classificationPath;
+			} else {
+				log.info("Skipped strategy : " + strategies.getClass().getName());
+			}
+			
+		}
+		
+		return null;
 		
 	}
 

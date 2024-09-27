@@ -17,15 +17,15 @@ public class ClassificationStrategyConfiguration {
 	@Bean
     @Order(1)
 	@Qualifier("ClassificationStrategyList")
-	public ClassificationStrategy getFirst() {
-		return new LastModififiedClassificationStrategy(configuration);
+	public ClassificationStrategy getSecond() {
+		return new FilenameDatePatternClassificationStrategy(configuration);
 	}
 	
 	@Bean
     @Order(2)
 	@Qualifier("ClassificationStrategyList")
-	public ClassificationStrategy getSecond() {
-		return new FilenameClassificationStrategy(configuration);
+	public ClassificationStrategy getFirst() {
+		return new LastModififiedClassificationStrategy(configuration);
 	}
 
 }
