@@ -18,7 +18,7 @@ public class ClassificationStrategyConfiguration {
     @Order(1)
 	@Qualifier("ClassificationStrategyList")
 	public ClassificationStrategy getSecond() {
-		return new FilenameDatePatternClassificationStrategy(configuration);
+		return new PhotoFilenameDatePatternClassificationStrategy(configuration);
 	}
 	
 	@Bean

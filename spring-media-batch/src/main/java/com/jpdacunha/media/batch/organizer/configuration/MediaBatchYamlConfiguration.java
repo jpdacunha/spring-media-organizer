@@ -15,7 +15,7 @@ import lombok.ToString;
 @Getter @Setter
 @ToString
 public class MediaBatchYamlConfiguration {
-	
+
 	public Paths paths;
 	private FileNamePatterns fileNamePatterns; 
 	
@@ -23,7 +23,8 @@ public class MediaBatchYamlConfiguration {
 	public static class FileNamePatterns {
 		
 		private String[] photoFileNamePatterns;
-		private String[] photoDatePatterns;
+		private String[] photoFileNameEmbeddedDatePatterns;
+		private String[] photoDateFormaterPatterns;
 		
 		public String[] getPhotoFileNamePatterns() {
 			return photoFileNamePatterns;
@@ -31,11 +32,17 @@ public class MediaBatchYamlConfiguration {
 		public void setPhotoFileNamePatterns(String[] photoFileNamePatterns) {
 			this.photoFileNamePatterns = photoFileNamePatterns;
 		}
-		public String[] getPhotoDatePatterns() {
-			return photoDatePatterns;
+		public String[] getPhotoFileNameEmbeddedDatePatterns() {
+			return photoFileNameEmbeddedDatePatterns;
 		}
-		public void setPhotoDatePatterns(String[] photoDatePatterns) {
-			this.photoDatePatterns = photoDatePatterns;
+		public void setPhotoFileNameEmbeddedDatePatterns(String[] photoFileNameEmbeddedDatePatterns) {
+			this.photoFileNameEmbeddedDatePatterns = photoFileNameEmbeddedDatePatterns;
+		}
+		public String[] getPhotoDateFormaterPatterns() {
+			return photoDateFormaterPatterns;
+		}
+		public void setPhotoDateFormaterPatterns(String[] photoDateFormaterPatterns) {
+			this.photoDateFormaterPatterns = photoDateFormaterPatterns;
 		}
 
 	}
@@ -82,6 +89,18 @@ public class MediaBatchYamlConfiguration {
 
 	public void setFileNamePatterns(FileNamePatterns fileNamePatterns) {
 		this.fileNamePatterns = fileNamePatterns;
+	}
+	
+	public String[] getPhotoFileNamePatterns() {
+		return fileNamePatterns.getPhotoFileNamePatterns();
+	}
+
+	public String[] getPhotoFileNameEmbeddedDatePatterns() {
+		return fileNamePatterns.getPhotoFileNameEmbeddedDatePatterns();
+	}
+
+	public String[] getPhotoDateFormaterPatterns() {
+		return fileNamePatterns.getPhotoDateFormaterPatterns();
 	}
 
 }

@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
-import com.jpdacunha.media.batch.organizer.exception.UnrelevantClassificationStrategyException;
 import com.jpdacunha.media.batch.organizer.model.DateDescriptor;
 import com.jpdacunha.media.batch.organizer.service.impl.MediaServiceImpl;
 
@@ -25,11 +24,15 @@ public class LastModififiedClassificationStrategy implements ClassificationStrat
 	}
 
 	@Override
-	public Path getClassificationPath(File toOrganize, File destDir) throws UnrelevantClassificationStrategyException {
+	public Path getClassificationPath(File toOrganize, File destDir) {
 		
 		if (destDir != null && toOrganize != null) {
 			
-			log.info("LastModififiedClassificationStrategy >>> " + Arrays.toString(configuration.getFileNamePatterns().getPhotoFileNamePatterns()) + " " + Arrays.toString(configuration.getFileNamePatterns().getPhotoDatePatterns()));
+			log.info("LastModififiedClassificationStrategy >>> " 
+					+ Arrays.toString(configuration.getFileNamePatterns().getPhotoFileNamePatterns()) + " " 
+					+ Arrays.toString(configuration.getFileNamePatterns().getPhotoFileNameEmbeddedDatePatterns())  + " " 
+					+ Arrays.toString(configuration.getFileNamePatterns().getPhotoDateFormaterPatterns())  + " " 
+			);
 			
 			DateDescriptor dateDescriptor = new DateDescriptor(toOrganize.lastModified(), ClassificationStrategy.DEFAULT_LOCALE);
 			

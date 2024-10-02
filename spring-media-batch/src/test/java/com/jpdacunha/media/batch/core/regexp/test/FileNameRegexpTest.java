@@ -10,7 +10,7 @@ import com.jpdacunha.media.batch.core.utils.RegexpUtils;
 public class FileNameRegexpTest {
 	
 	private static Logger log = LoggerFactory.getLogger(FileNameRegexpTest.class);
-	private static final String PATTERN1 = "^(IMG-)(\\d{8})(-WA.jpg)$";
+	private static final String PATTERN1 = "^(IMG-)(\\d{8})(-WA)(\\d{4})(.jpg)$";
 	private static final String PATTERN2 = "^(\\d{8})(_)(\\d{6})(.jpg)$";
 	private static final String PATTERN3 = "^(IMG)(\\d{14})(.jpg)$";
 	
@@ -18,7 +18,16 @@ public class FileNameRegexpTest {
 	public void pattern1() {
 		
 		String pattern = PATTERN1;
-		String value = "IMG-20240925-WA.jpg";
+		String value = "IMG-20151225-WA0005.jpg";
+		Assert.assertTrue(RegexpUtils.match(pattern, value));
+		
+	}
+	
+	@Test()
+	public void pattern11() {
+		
+		String pattern = PATTERN1;
+		String value = "IMG-20190425-WA0007.jpg";
 		Assert.assertTrue(RegexpUtils.match(pattern, value));
 		
 	}
@@ -27,7 +36,7 @@ public class FileNameRegexpTest {
 	public void pattern1_error_begin() {
 		
 		String pattern = PATTERN1;
-		String value = "AAA-20240925-WA.jpg";
+		String value = "AAA-20240925-WA0007.jpg";
 		Assert.assertFalse(RegexpUtils.match(pattern, value));
 		
 	}
@@ -36,7 +45,7 @@ public class FileNameRegexpTest {
 	public void pattern1_error_end() {
 		
 		String pattern = PATTERN1;
-		String value = "IMG-20240925-WA.gif";
+		String value = "IMG-20240925-WA0007.gif";
 		Assert.assertFalse(RegexpUtils.match(pattern, value));
 		
 	}
@@ -45,7 +54,7 @@ public class FileNameRegexpTest {
 	public void pattern1_error_length() {
 		
 		String pattern = PATTERN1;
-		String value = "IMG-123456789-WA.jpg";
+		String value = "IMG-123456789-WA0007.jpg";
 		
 		Assert.assertFalse(RegexpUtils.match(pattern, value));
 	}

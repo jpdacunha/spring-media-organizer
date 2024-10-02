@@ -131,12 +131,8 @@ public class MediaServiceImpl implements MediaService {
 				
 				MediaDescriptor mediaDescriptor = new MediaDescriptor(file, Locale.FRANCE);
 				
-				//Les dates de modification ne sont pas conservées en cas de copie de fichier
-				//Les données EXIF ne sont pas renseignées dans les photos que nous avons. Il faut se baser sur la date de modif qui peut être lue sans librairie particulière.
 				log.info("## Starting classification for [" + file.getName() + "] ...");
 				log.debug("  :> File details : " + mediaDescriptor);
-				
-				//String yearMonthPath = destDir.getAbsolutePath() + File.separator + mediaDescriptor.getYearMonthDirName();
 				
 				Path yearMonthPath = getRelevantClassificationPath(file, destDir);
 				
@@ -166,6 +162,7 @@ public class MediaServiceImpl implements MediaService {
 	
 	public Path getRelevantClassificationPath(File toClassify, File destDir) {
 
+		//Apply first applicable strategy
 		for (ClassificationStrategy strategies : classificationStrategyList) {
 			
 			Path classificationPath = strategies.getClassificationPath(toClassify, destDir);

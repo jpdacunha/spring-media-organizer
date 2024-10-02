@@ -26,6 +26,17 @@ public class PhotoMediaServiceTest extends PhotoRootTest {
 	
 	@Autowired
 	private MediaBatchYamlConfiguration configuration;
+	
+	@Test
+	public void PhotoClassifyByYearNominal_FileNamePatternStrategy_Whatsapp_Pattern() {
+		
+		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
+		
+		boolean result = super.classifyByYearDirEquality(configuration, mediaService, testName);
+		
+		Assert.assertTrue(result);
+		
+	}
 
 	@Test
 	public void PhotoClassifyByYearNominal1() {
