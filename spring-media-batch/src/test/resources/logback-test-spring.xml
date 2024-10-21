@@ -48,7 +48,7 @@
 	<logger name="org.hibernate" 		level="INFO" additivity="true" />
 	<logger name="org.quartz" 			level="INFO" additivity="true" />
 
-	<logger name="com.jpdacunha.media.batch.*" level="DEBUG" additivity="true">
+	<logger name="com.jpdacunha.media.batch.*" level="TRACE" additivity="true">
 		<appender-ref ref="STDOUT" />
 	</logger>
 	

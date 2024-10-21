@@ -8,11 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
-import com.jpdacunha.media.batch.organizer.service.impl.MediaServiceImpl;
 
 public class PhotoFilenameDatePatternClassificationStrategy extends FilenameDatePatternClassificationStrategy implements ClassificationStrategy {
 	
-	private static Logger log = LoggerFactory.getLogger(MediaServiceImpl.class);
+	private static Logger log = LoggerFactory.getLogger(PhotoFilenameDatePatternClassificationStrategy.class);
 	
 	public PhotoFilenameDatePatternClassificationStrategy(MediaBatchYamlConfiguration configuration) {
 		super(configuration.getPhotoFileNamePatterns(), configuration.getPhotoFileNameEmbeddedDatePatterns(), configuration.getPhotoDateFormaterPatterns());

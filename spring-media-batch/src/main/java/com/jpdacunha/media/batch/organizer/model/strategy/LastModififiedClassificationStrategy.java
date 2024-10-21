@@ -4,17 +4,15 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
 import com.jpdacunha.media.batch.organizer.model.DateDescriptor;
-import com.jpdacunha.media.batch.organizer.service.impl.MediaServiceImpl;
 
 public class LastModififiedClassificationStrategy implements ClassificationStrategy {
 	
-	private static Logger log = LoggerFactory.getLogger(MediaServiceImpl.class);
+	private static Logger log = LoggerFactory.getLogger(LastModififiedClassificationStrategy.class);
 	
 	private MediaBatchYamlConfiguration configuration;
 	
@@ -35,10 +33,8 @@ public class LastModififiedClassificationStrategy implements ClassificationStrat
 			);
 			
 			DateDescriptor dateDescriptor = new DateDescriptor(toOrganize.lastModified(), ClassificationStrategy.DEFAULT_LOCALE);
-			
-			String yearMonthDirName = dateDescriptor.getYear() + File.separator + StringUtils.capitalize(dateDescriptor.getMonthName());
-			
-			String yearMonthPath = destDir.getAbsolutePath() + File.separator + yearMonthDirName;
+		
+			String yearMonthPath = dateDescriptor.getYearMonthAsStringPath(destDir);
 			
 			return Path.of(yearMonthPath);
 			

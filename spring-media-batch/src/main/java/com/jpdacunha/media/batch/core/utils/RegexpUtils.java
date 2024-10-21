@@ -43,7 +43,6 @@ public class RegexpUtils {
 			    String group = matcher.group();
 			    int start = matcher.start();
 			    int end = matcher.end();
-			    log.info(group + " " + start + " " + end);
 			    returnedValue = group;
 			}
 		}

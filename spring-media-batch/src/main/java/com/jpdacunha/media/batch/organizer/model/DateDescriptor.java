@@ -1,10 +1,13 @@
 package com.jpdacunha.media.batch.organizer.model;
 
+import java.io.File;
 import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import org.apache.commons.lang3.StringUtils;
 
 import lombok.ToString;
 
@@ -38,6 +41,22 @@ public class DateDescriptor {
 		
 		String monthName = Month.of(month).getDisplayName(TextStyle.FULL, locale);
 		this.monthName = monthName;
+		
+	}
+	
+	public String getYearMonthAsStringPath(File destDir) {
+		
+		if (destDir != null) {
+		
+			String yearMonthDirName = this.getYear() + File.separator + StringUtils.capitalize(this.getMonthName());
+			
+			String yearMonthPath = destDir.getAbsolutePath() + File.separator + yearMonthDirName;
+			
+			return yearMonthPath;
+			
+		} else {
+			return null;
+		}
 		
 	}
 

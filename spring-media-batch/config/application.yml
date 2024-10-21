@@ -7,6 +7,7 @@ spring:
 logging:
   file:
     path: ./log/
+  config: src/test/resources/logback-test-spring.xml
 spring:
   profiles: test
   datasource:

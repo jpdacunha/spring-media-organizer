@@ -1,6 +1,7 @@
 package com.jpdacunha.media.batch.core.configuration.service.impl;
 
 import java.io.File;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jpdacunha.media.batch.core.configuration.service.ConfigurationService;
+import com.jpdacunha.media.batch.core.utils.ArrayHelper;
 import com.jpdacunha.media.batch.core.utils.FileSystemUtils;
 import com.jpdacunha.media.batch.organizer.configuration.MediaBatchYamlConfiguration;
+import com.jpdacunha.media.batch.organizer.exception.InvalidPatternSetMediaBatchException;
 import com.jpdacunha.media.batch.organizer.exception.MediaBatchException;
 import com.jpdacunha.media.batch.organizer.exception.MissingDirectoryMediaBatchException;
 
@@ -54,6 +57,15 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 			}
 
 		}
+		
+		String[] photoFileNamePatterns = configuration.getPhotoFileNamePatterns();
+		String[] photoFileNameEmbeddedDatePatterns = configuration.getPhotoFileNameEmbeddedDatePatterns();
+		String[] photoDateFormaterPatterns = configuration.getPhotoDateFormaterPatterns();
+		
+		if (ArrayHelper.differentLength(photoFileNamePatterns, photoFileNameEmbeddedDatePatterns, photoDateFormaterPatterns)) {
+			throw new InvalidPatternSetMediaBatchException("Pattern sets with different sizes are invalid photoFileNamePatterns:[" + Arrays.toString(photoDateFormaterPatterns) + "],photoFileNameEmbeddedDatePatterns:[" + Arrays.toString(photoFileNameEmbeddedDatePatterns)  + "],photoDateFormaterPatterns:[" + Arrays.toString(photoDateFormaterPatterns)  + "]");
+		}
+		
 		log.info("## Configuration is OK");
 		
 	}
