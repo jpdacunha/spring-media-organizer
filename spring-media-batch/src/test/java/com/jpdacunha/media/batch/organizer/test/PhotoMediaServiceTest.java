@@ -28,7 +28,40 @@ public class PhotoMediaServiceTest extends PhotoRootTest {
 	private MediaBatchYamlConfiguration configuration;
 	
 	@Test
+	public void PhotoClassifyByYearNominal_FileNamePatternStrategy_Pattern3() {
+		
+		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
+		
+		boolean result = super.classifyByYearDirEquality(configuration, mediaService, testName);
+		
+		Assert.assertTrue(result);
+		
+	}
+	
+	@Test
+	public void PhotoClassifyByYearNominal_FileNamePatternStrategy_Pattern2() {
+		
+		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
+		
+		boolean result = super.classifyByYearDirEquality(configuration, mediaService, testName);
+		
+		Assert.assertTrue(result);
+		
+	}
+	
+	@Test
 	public void PhotoClassifyByYearNominal_FileNamePatternStrategy_Whatsapp_Pattern() {
+		
+		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
+		
+		boolean result = super.classifyByYearDirEquality(configuration, mediaService, testName);
+		
+		Assert.assertTrue(result);
+		
+	}
+	
+	@Test
+	public void PhotoClassifyByYearNominal_FileNamePatternStrategy_Instagram_Pattern() {
 		
 		String testName =  new Object(){}.getClass().getEnclosingMethod().getName();
 		

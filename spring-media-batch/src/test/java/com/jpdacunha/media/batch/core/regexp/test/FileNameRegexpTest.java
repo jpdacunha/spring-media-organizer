@@ -10,14 +10,16 @@ import com.jpdacunha.media.batch.core.utils.RegexpUtils;
 public class FileNameRegexpTest {
 	
 	private static Logger log = LoggerFactory.getLogger(FileNameRegexpTest.class);
-	private static final String PATTERN1 = "^(IMG-)(\\d{8})(-WA)(\\d{4})(.jpg)$";
-	private static final String PATTERN2 = "^(\\d{8})(_)(\\d{6})(.jpg)$";
-	private static final String PATTERN3 = "^(IMG)(\\d{14})(.jpg)$";
+	
+	private static final String PATTERN_WHATSAPP = "^(IMG-)(\\d{8})(-WA)(\\d{4})(.jpg|.jpeg)$";
+	private static final String PATTERN2 = "^(\\d{8})(_)(\\d{6})(.jpg|.jpeg)$";
+	private static final String PATTERN3 = "^(IMG)(\\d{14})(.jpg|.jpeg)$";
+	private static final String PATTERN_INSTAGRAM = "^(IMG_)(\\d{8})(_)(\\d{6})(_)(\\d{3})(.jpg|.jpeg)$";
 	
 	@Test()
 	public void pattern1() {
 		
-		String pattern = PATTERN1;
+		String pattern = PATTERN_WHATSAPP;
 		String value = "IMG-20151225-WA0005.jpg";
 		Assert.assertTrue(RegexpUtils.match(pattern, value));
 		
@@ -26,8 +28,17 @@ public class FileNameRegexpTest {
 	@Test()
 	public void pattern11() {
 		
-		String pattern = PATTERN1;
+		String pattern = PATTERN_WHATSAPP;
 		String value = "IMG-20190425-WA0007.jpg";
+		Assert.assertTrue(RegexpUtils.match(pattern, value));
+		
+	}
+	
+	@Test()
+	public void pattern12() {
+		
+		String pattern = PATTERN_WHATSAPP;
+		String value = "IMG-20190425-WA0007.jpeg";
 		Assert.assertTrue(RegexpUtils.match(pattern, value));
 		
 	}
@@ -35,7 +46,7 @@ public class FileNameRegexpTest {
 	@Test()
 	public void pattern1_error_begin() {
 		
-		String pattern = PATTERN1;
+		String pattern = PATTERN_WHATSAPP;
 		String value = "AAA-20240925-WA0007.jpg";
 		Assert.assertFalse(RegexpUtils.match(pattern, value));
 		
@@ -44,7 +55,7 @@ public class FileNameRegexpTest {
 	@Test()
 	public void pattern1_error_end() {
 		
-		String pattern = PATTERN1;
+		String pattern = PATTERN_WHATSAPP;
 		String value = "IMG-20240925-WA0007.gif";
 		Assert.assertFalse(RegexpUtils.match(pattern, value));
 		
@@ -53,7 +64,7 @@ public class FileNameRegexpTest {
 	@Test()
 	public void pattern1_error_length() {
 		
-		String pattern = PATTERN1;
+		String pattern = PATTERN_WHATSAPP;
 		String value = "IMG-123456789-WA0007.jpg";
 		
 		Assert.assertFalse(RegexpUtils.match(pattern, value));
@@ -136,6 +147,52 @@ public class FileNameRegexpTest {
 		
 		String pattern = PATTERN3;
 		String value = "IAAA202409111106120.jpg";
+		Assert.assertFalse(RegexpUtils.match(pattern, value));
+		
+	}
+	
+	@Test()
+	public void pattern4() {
+		
+		String pattern = PATTERN_INSTAGRAM;
+		String value = "IMG_20240723_203819_309.jpg";
+		Assert.assertTrue(RegexpUtils.match(pattern, value));
+		
+	}
+	
+	@Test()
+	public void pattern41() {
+		
+		String pattern = PATTERN_INSTAGRAM;
+		String value = "IMG_20240723_203819_309.jpeg";
+		Assert.assertTrue(RegexpUtils.match(pattern, value));
+		
+	}
+	
+	
+	@Test()
+	public void pattern4_error_length() {
+		
+		String pattern = PATTERN_INSTAGRAM;
+		String value = "IMG_20240723_203819_3091.jpg";
+		Assert.assertFalse(RegexpUtils.match(pattern, value));
+		
+	}
+	
+	@Test()
+	public void pattern4_error_end() {
+		
+		String pattern = PATTERN_INSTAGRAM;
+		String value = "IMG_20240723_203819_309.tif";
+		Assert.assertFalse(RegexpUtils.match(pattern, value));
+		
+	}
+	
+	@Test()
+	public void pattern4_error_begin() {
+		
+		String pattern = PATTERN_INSTAGRAM;
+		String value = "III_20240723_203819_309.jpg";
 		Assert.assertFalse(RegexpUtils.match(pattern, value));
 		
 	}

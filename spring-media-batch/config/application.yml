@@ -28,9 +28,9 @@ media-batch-organizer:
         destination-root-dir-photo: 'src/test/resources/spring-media-batch'
         destination-root-dir-video: 'src/test/resources/spring-media-batch'
     file-name-patterns:
-        photo-file-name-patterns: '^(IMG-)(\d{8})(-WA)(\d{4})(.jpg)$,^(\d{8})(_)(\d{6})(.jpg)$,^(IMG)(\d{14})(.jpg)$'
-        photo-file-name-embedded-date-patterns: '(\d{8}),^(\d{8})(_)(\d{6}),(\d{14})'
-        photo-date-formater-patterns: 'yyyyMMdd,yyyyMMdd_HHmmss,yyyyMMddHHmmss'
+        photo-file-name-patterns: '^(IMG-)(\d{8})(-WA)(\d{4})(.jpg|.jpeg)$,^(\d{8})(_)(\d{6})(.jpg|.jpeg)$,^(IMG)(\d{14})(.jpg|.jpeg)$,^(IMG_)(\d{8})(_)(\d{6})(_)(\d{3})(.jpg|.jpeg)$'
+        photo-file-name-embedded-date-patterns: '(\d{8}),^(\d{8})(_)(\d{6}),(\d{14}),(\d{8})'
+        photo-date-formater-patterns: 'yyyyMMdd,yyyyMMdd_HHmmss,yyyyMMddHHmmss,yyyyMMdd'
 media-batch-remove-duplicates-fotos:
     paths:
         # Comma separated list where batch will lookup for duplicates
@@ -65,9 +65,9 @@ media-batch-organizer:
         destination-root-dir-photo: '/home/dev/spring-media-batch/destination-photo'
         destination-root-dir-video: '/home/dev/spring-media-batch/destination-video' 
     file-name-patterns:
-        photo-file-name-patterns: '^(IMG-)(\d{8})(-WA)(\d{4})(.jpg)$,^(\d{8})(_)(\d{6})(.jpg)$,^(IMG)(\d{14})(.jpg)$'
-        photo-file-name-embedded-date-patterns: '(\d{8}),^(\d{8})(_)(\d{6}),(\d{14})'
-        photo-date-formater-patterns: 'yyyyMMdd,yyyyMMdd_HHmmss,yyyyMMddHHmmss'
+        photo-file-name-patterns: '^(IMG-)(\d{8})(-WA)(\d{4})(.jpg|.jpeg)$,^(\d{8})(_)(\d{6})(.jpg|.jpeg)$,^(IMG)(\d{14})(.jpg|.jpeg)$,^(IMG_)(\d{8})(_)(\d{6})(_)(\d{3})(.jpg|.jpeg)$'
+        photo-file-name-embedded-date-patterns: '(\d{8}),^(\d{8})(_)(\d{6}),(\d{14}),(\d{8})'
+        photo-date-formater-patterns: 'yyyyMMdd,yyyyMMdd_HHmmss,yyyyMMddHHmmss,yyyyMMdd'
 media-batch-remove-duplicates-fotos:
     paths:
         # Comma separated list where batch will lookup for duplicates
@@ -102,9 +102,9 @@ media-batch-organizer:
         destination-root-dir-photo: '/volume1/photo'
         destination-root-dir-video: '/volume1/video/Famille'
     file-name-patterns:
-        photo-file-name-patterns: '^(IMG-)(\d{8})(-WA)(\d{4})(.jpg)$,^(\d{8})(_)(\d{6})(.jpg)$,^(IMG)(\d{14})(.jpg)$'
-        photo-file-name-embedded-date-patterns: '(\d{8}),^(\d{8})(_)(\d{6}),(\d{14})'
-        photo-date-formater-patterns: 'yyyyMMdd,yyyyMMdd_HHmmss,yyyyMMddHHmmss'
+        photo-file-name-patterns: '^(IMG-)(\d{8})(-WA)(\d{4})(.jpg|.jpeg)$,^(\d{8})(_)(\d{6})(.jpg|.jpeg)$,^(IMG)(\d{14})(.jpg|.jpeg)$,^(IMG_)(\d{8})(_)(\d{6})(_)(\d{3})(.jpg|.jpeg)$'
+        photo-file-name-embedded-date-patterns: '(\d{8}),^(\d{8})(_)(\d{6}),(\d{14}),(\d{8})'
+        photo-date-formater-patterns: 'yyyyMMdd,yyyyMMdd_HHmmss,yyyyMMddHHmmss,yyyyMMdd'
 media-batch-remove-duplicates-fotos:
     paths:
         # Comma separated list where batch will lookup for duplicates

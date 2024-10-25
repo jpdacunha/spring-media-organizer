@@ -63,7 +63,12 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 		String[] photoDateFormaterPatterns = configuration.getPhotoDateFormaterPatterns();
 		
 		if (ArrayHelper.differentLength(photoFileNamePatterns, photoFileNameEmbeddedDatePatterns, photoDateFormaterPatterns)) {
-			throw new InvalidPatternSetMediaBatchException("Pattern sets with different sizes are invalid photoFileNamePatterns:[" + Arrays.toString(photoDateFormaterPatterns) + "],photoFileNameEmbeddedDatePatterns:[" + Arrays.toString(photoFileNameEmbeddedDatePatterns)  + "],photoDateFormaterPatterns:[" + Arrays.toString(photoDateFormaterPatterns)  + "]");
+			
+			String beginErrorMessage = "Pattern sets with different sizes are invalid. ";
+			String middleErrorMessage = "Array sizes were photoFileNamePatterns:[" + photoDateFormaterPatterns.length + "],photoFileNameEmbeddedDatePatterns:[" + photoFileNameEmbeddedDatePatterns.length  + "],photoDateFormaterPatterns:[" + photoDateFormaterPatterns.length + "]. ";
+			String endErrorMessage = "Configuration dump : photoFileNamePatterns:[" + Arrays.toString(photoDateFormaterPatterns) + "],photoFileNameEmbeddedDatePatterns:[" + Arrays.toString(photoFileNameEmbeddedDatePatterns)  + "],photoDateFormaterPatterns:[" + Arrays.toString(photoDateFormaterPatterns)  + "]";
+			throw new InvalidPatternSetMediaBatchException(beginErrorMessage + middleErrorMessage + endErrorMessage);
+			
 		}
 		
 		log.info("## Configuration is OK");

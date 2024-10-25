@@ -7,13 +7,14 @@ import com.jpdacunha.media.batch.core.utils.RegexpUtils;
 
 public class FileNameRegexpExtractTest {
 		
-	private static final String PATTERN1 = "(\\d{8})";
+	private static final String PATTERN_WHATSAPP = "(\\d{8})";
 	private static final String PATTERN2 = "^(\\d{8})(_)(\\d{6})";
 	private static final String PATTERN3 = "(\\d{14})";
+	private static final String PATTERN_INSTAGRAM = "(\\d{8})";
 	
 	@Test()
 	public void pattern1() {		
-		String pattern = PATTERN1;
+		String pattern = PATTERN_WHATSAPP;
 		String value = "IMG-20240925-WA0007.jpg";
 		String extracted = RegexpUtils.extractFirst(pattern, value);
 		Assert.assertEquals("20240925", extracted);
@@ -22,7 +23,7 @@ public class FileNameRegexpExtractTest {
 	
 	@Test()
 	public void pattern1_error_begin() {
-		String pattern = PATTERN1;
+		String pattern = PATTERN_WHATSAPP;
 		String value = "IMG-A0240925-WA0007.jpg";
 		String extracted = RegexpUtils.extractFirst(pattern, value);
 		Assert.assertEquals(null, extracted);	
@@ -30,7 +31,7 @@ public class FileNameRegexpExtractTest {
 	
 	@Test()
 	public void pattern1_error_end() {
-		String pattern = PATTERN1;
+		String pattern = PATTERN_WHATSAPP;
 		String value = "IMG-2024092A-WA0007.jpg";
 		String extracted = RegexpUtils.extractFirst(pattern, value);
 		Assert.assertEquals(null, extracted);	
@@ -92,6 +93,46 @@ public class FileNameRegexpExtractTest {
 		String extracted = RegexpUtils.extractFirst(pattern, value);
 		Assert.assertEquals(null, extracted);
 	}
-
+	
+	@Test()
+	public void pattern4() {
+		String pattern = PATTERN_INSTAGRAM;
+		String value = "IMG_20240723_203819_338.jpg";
+		String extracted = RegexpUtils.extractFirst(pattern, value);
+		Assert.assertEquals("20240723", extracted);
+	}
+	
+	@Test()
+	public void pattern41() {
+		String pattern = PATTERN_INSTAGRAM;
+		String value = "IMG_20240723_203819_338.jpeg";
+		String extracted = RegexpUtils.extractFirst(pattern, value);
+		Assert.assertEquals("20240723", extracted);
+	}
+	
+	
+	@Test()
+	public void pattern4_error_length() {
+		String pattern = PATTERN_INSTAGRAM;
+		String value = "IMG_20240_203819_338.jpg";
+		String extracted = RegexpUtils.extractFirst(pattern, value);
+		Assert.assertEquals(null, extracted);
+	}
+	
+	@Test()
+	public void pattern4_error_begin() {
+		String pattern = PATTERN_INSTAGRAM;
+		String value = "IMG_A0240723_203819_338.jpg";
+		String extracted = RegexpUtils.extractFirst(pattern, value);
+		Assert.assertEquals(null, extracted);
+	}
+	
+	@Test()
+	public void pattern4_error_end() {
+		String pattern = PATTERN_INSTAGRAM;
+		String value = "IMG_2024072A_203819_338.jpg";
+		String extracted = RegexpUtils.extractFirst(pattern, value);
+		Assert.assertEquals(null, extracted);
+	}
 
 }
