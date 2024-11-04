@@ -39,6 +39,8 @@ public abstract class FilenameDatePatternClassificationStrategy {
 			
 			super();
 			
+			log.info("START : Registering PatternConfigurations ...");
+			
 			if (ArrayHelper.sameLength(fileNamePatterns, fileNameEmbeddedDatePatterns, dateFormaterPatterns)) {
 				
 				int i = 0;
@@ -58,6 +60,8 @@ public abstract class FilenameDatePatternClassificationStrategy {
 			} else {
 				log.warn("Invalid configuration detected : no initilization will be done");
 			}
+			
+			log.info("END : Registering PatternConfigurations.");
 			
 		}
 		

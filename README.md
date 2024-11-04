@@ -24,7 +24,7 @@ $ cd ./spring-media-organizer/spring-media-batch/
 mvn clean install -Dmaven.test.skip=true
 ```
 
-To change image version before uploading to docker hub, update parent project pom.xml version
+To change image version before uploading to docker hub, update child project pom.xml version
 
 ```
 	<parent>
